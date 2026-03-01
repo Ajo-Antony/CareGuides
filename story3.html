@@ -1,0 +1,207 @@
+<!-- Continuing with Story 3 - "The Boy Who Cried Wolf" -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Boy Who Cried Wolf</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #f9f9f9, #e0f7fa);
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            padding: 40px;
+            color: #333;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00897b;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .story-content {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .moral {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #50202a;
+            font-size: 1.2rem;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .nav-buttons a {
+            padding: 10px 20px;
+            background: #552e81;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+
+        .nav-buttons a:hover {
+            background: #00695c;
+        }
+
+        .narration-controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .narration-wrapper {
+            display: inline-block;
+            background: #e0f2f1;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .narration-wrapper select,
+        .narration-wrapper button {
+            margin-top: 10px;
+            font-size: 1rem;
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .narration-wrapper button {
+            background-color: #451cff;
+            color: white;
+        }
+
+        .narration-wrapper button:hover {
+            background-color: #00695c;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>The Boy Who Cried Wolf</h1>
+    <div class="narration-controls">
+        <div class="narration-wrapper">
+            <div>
+                <label for="voiceSelect">Choose Narrator:</label>
+                <select id="voiceSelect">
+                    <option value="">Loading voices...</option>
+                </select>
+            </div>
+            <button onclick="toggleNarration()">🔊 Play/Pause Narration</button>
+        </div>
+    </div>
+    <div class="story-content">
+        <p>In a small village, there was a shepherd boy who watched a flock of sheep near the hills. He found his job boring and thought of ways to amuse himself.</p>
+        <p>One day, he shouted, “Wolf! Wolf! A wolf is chasing the sheep!” Hearing his cries, the villagers came running with sticks to drive away the wolf.</p>
+        <p>But when they arrived, they found no wolf, just the boy laughing at them. The villagers were upset but returned to their work.</p>
+        <p>The next day, the boy played the same trick. Again, he cried, “Wolf! Wolf!” and once more the villagers rushed to his aid.</p>
+        <p>Yet again, there was no wolf, and the boy chuckled as the villagers grumbled and left.</p>
+        <p>However, on the third day, a real wolf appeared from the forest and started attacking the sheep!</p>
+        <p>The boy shouted loudly, “Wolf! Wolf! Please help me!” But this time, no one came.</p>
+        <p>The villagers thought the boy was playing tricks again and ignored his cries.</p>
+        <p>The wolf scattered the flock, and many sheep were lost. The boy was heartbroken and regretted deceiving the villagers.</p>
+        <p>When he returned to the village that evening, he confessed everything to the villagers and apologized.</p>
+        <p>The villagers forgave him but reminded him that lying breaks trust and has consequences.</p>
+        <p>From that day on, the boy never lied again and became known for his honesty.</p>
+        <p>He learned that trust is hard to rebuild once it’s broken.</p>
+        <p>Even when years passed, the boy often told young children the lesson he had learned the hard way.</p>
+        <p>The villagers also shared the story as a warning about the dangers of lying.</p>
+        <p>The boy grew up to be a wise and responsible man, always remembered for the lesson he taught the village.</p>
+        <p>And so, the village remained a place where honesty was valued above all.</p>
+
+        <p class="moral">Moral: Liars are not believed, even when they speak the truth.</p>
+
+        <div class="nav-buttons">
+            <a href="story2.html">← Previous</a>
+            <a href="story.html">🏠 Storyboard</a>
+            <a href="story4.html">Next →</a>
+        </div>
+    </div>
+    
+    <script>
+        const synth = window.speechSynthesis;
+        const voiceSelect = document.getElementById("voiceSelect");
+        let voices = [];
+        let utterance;
+        let isSpeaking = false;
+
+        function populateVoices() {
+            voices = synth.getVoices();
+            voiceSelect.innerHTML = "";
+
+            voices.forEach((voice, index) => {
+                const option = document.createElement("option");
+                option.value = index;
+                option.textContent = `${voice.name} (${voice.lang})`;
+
+                if (voice.name.toLowerCase().includes("female") || voice.name.toLowerCase().includes("zira")) {
+                    option.textContent += " 👩";
+                } else if (voice.name.toLowerCase().includes("male") || voice.name.toLowerCase().includes("david")) {
+                    option.textContent += " 👨";
+                }
+
+                voiceSelect.appendChild(option);
+            });
+        }
+
+        populateVoices();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = populateVoices;
+        }
+
+        function toggleNarration() {
+            if (isSpeaking) {
+                synth.cancel();
+                isSpeaking = false;
+                return;
+            }
+
+            const selectedIndex = voiceSelect.value;
+            const selectedVoice = voices[selectedIndex];
+            const storyText = document.getElementById("storyText").innerText;
+
+            utterance = new SpeechSynthesisUtterance(storyText);
+            if (selectedVoice) {
+                utterance.voice = selectedVoice;
+            }
+
+            synth.speak(utterance);
+            isSpeaking = true;
+
+            utterance.onend = () => {
+                isSpeaking = false;
+            };
+        }
+    </script>
+</body>
+
+</html>

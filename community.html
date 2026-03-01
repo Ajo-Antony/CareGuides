@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Special Hospitals/Schools in Kerala</title>
+  <link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+  rel="stylesheet"
+  />
+  <!-- Flaticon Font -->
+  <link href="lib/flaticon/font/flaticon.css" rel="stylesheet" />
+  <!-- Libraries Stylesheet -->
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+  <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet" />
+  <!-- Customized Bootstrap Stylesheet -->
+  <link href="css/style.css" rel="stylesheet" />
+  <style>
+    :root {
+      --primary-color: #3498db;
+      --secondary-color: #2c3e50;
+      --accent-color: #1abc9c;
+      --light-color: #f7f9fc;
+      --dark-color: #34495e;
+      --danger-color: #e74c3c;
+      --success-color: #27ae60;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Navigation Bar */
+    .navbar {
+      background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+      color: white;
+      padding: 15px 30px;
+      border-radius: 0 0 15px 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+
+    .navbar-brand i {
+      font-size: 1.8rem;
+    }
+
+    .back-to-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .back-to-home:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border-color: white;
+    }
+
+    .back-to-home i {
+      font-size: 1.1rem;
+    }
+
+    header {
+      background: linear-gradient(to right, var(--accent-color), var(--primary-color));
+      color: white;
+      padding: 25px 0;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    h1 {
+      color: white;
+      margin: 0;
+      font-size: 2.5rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .subtitle {
+      color: rgba(255,255,255,0.9);
+      margin-top: 10px;
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 25px;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .search-container {
+      flex: 1;
+      min-width: 300px;
+      position: relative;
+    }
+
+    .search-container i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary-color);
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px 20px 12px 45px;
+      font-size: 16px;
+      border: 2px solid #ddd;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    }
+
+    .filter-container {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    select {
+      padding: 12px 20px;
+      border: 2px solid #ddd;
+      border-radius: 50px;
+      font-size: 14px;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    .results-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding: 0 10px;
+    }
+
+    .results-count {
+      background: var(--accent-color);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .table-container {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 800px;
+    }
+
+    th {
+      background: linear-gradient(to right, var(--secondary-color), var(--dark-color));
+      color: white;
+      padding: 18px 15px;
+      text-align: left;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      user-select: none;
+    }
+
+    th.sortable {
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    th.sortable:hover {
+      background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    }
+
+    th i {
+      margin-left: 8px;
+      font-size: 12px;
+      opacity: 0.7;
+    }
+
+    td {
+      padding: 16px 15px;
+      border-bottom: 1px solid #eee;
+      transition: background 0.2s ease;
+    }
+
+    tr:hover {
+      background-color: #f8f9fa;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .organization-cell {
+      font-weight: 600;
+      color: var(--secondary-color);
+    }
+
+    .email-cell a {
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .email-cell a:hover {
+      color: var(--accent-color);
+      text-decoration: underline;
+    }
+
+    .phone-cell {
+      direction: ltr;
+      unicode-bidi: embed;
+    }
+
+    .district-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: var(--light-color);
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--dark-color);
+      border: 1px solid #ddd;
+    }
+
+    .actions {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+      color: white;
+    }
+
+    .btn-secondary {
+      background: var(--light-color);
+      color: var(--dark-color);
+      border: 2px solid #ddd;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #7f8c8d;
+    }
+
+    .empty-state i {
+      font-size: 48px;
+      margin-bottom: 20px;
+      color: #ddd;
+    }
+
+    .empty-state h3 {
+      color: #95a5a6;
+      margin-bottom: 10px;
+    }
+
+    .highlight {
+      background-color: #fffacd !important;
+      border-left: 4px solid #ffeb3b;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .quick-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--dark-color);
+      font-weight: 500;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      border: 1px solid #eee;
+    }
+
+    .quick-action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      color: var(--primary-color);
+    }
+
+    .quick-action-btn i {
+      color: var(--accent-color);
+    }
+
+    /* Mobile Responsive */
+    @media screen and (max-width: 768px) {
+      .container {
+        padding: 10px;
+      }
+      
+      .navbar {
+        padding: 12px 15px;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+      
+      .navbar-brand {
+        font-size: 1.3rem;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      .controls {
+        flex-direction: column;
+      }
+      
+      .search-container {
+        min-width: 100%;
+      }
+      
+      th, td {
+        padding: 12px 10px;
+      }
+      
+      .table-container {
+        border-radius: 10px;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .actions {
+        flex-direction: column;
+      }
+      
+      .quick-actions {
+        justify-content: center;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      th {
+        font-size: 0.9rem;
+      }
+      
+      td {
+        font-size: 0.85rem;
+      }
+      
+      .results-info {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+      }
+      
+      .back-to-home {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      .navbar, .controls, .actions, .search-box, .quick-actions {
+        display: none;
+      }
+      
+      table {
+        box-shadow: none;
+      }
+      
+      th {
+        background: #333 !important;
+        color: white !important;
+        -webkit-print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <a href="dashboard.php" class="navbar-brand">
+      <i class="fas fa-home"></i>
+      <span>Kerala Special Care Directory</span>
+    </a>
+    <a href="dashboard.php" class="back-to-home">
+      <i class="fas fa-arrow-left"></i>
+      Back to Dashboard
+    </a>
+  </div>
+
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-hospital-alt"></i> Special Hospitals & Schools in Kerala</h1>
+      <p class="subtitle">Comprehensive directory of organizations providing specialized care, education, and vocational training for differently-abled individuals across all districts of Kerala</p>
+    </header>
+
+    <!-- Quick Actions -->
+    
+
+    <div class="controls">
+      <div class="search-container">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search by organization, district, person, phone...">
+        </div>
+      </div>
+      
+      <div class="filter-container">
+        <select id="districtFilter" onchange="filterByDistrict()">
+          <option value="">All Districts</option>
+          <!-- Districts will be populated by JavaScript -->
+        </select>
+        
+        <select id="sortFilter" onchange="sortTable()">
+          <option value="0">Sort by: Default</option>
+          <option value="1">A-Z (Organization)</option>
+          <option value="2">Z-A (Organization)</option>
+          <option value="3">District A-Z</option>
+          <option value="4">District Z-A</option>
+        </select>
+        
+        <button class="btn btn-secondary" onclick="resetFilters()">
+          <i class="fas fa-redo"></i> Reset
+        </button>
+      </div>
+    </div>
+
+    <div class="results-info">
+      <div class="results-count" id="resultsCount">Showing 10 organizations</div>
+      <div style="color: var(--dark-color); font-weight: 500;">
+        <i class="fas fa-info-circle"></i> Click on column headers to sort
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table id="hospitalTable">
+        <thead>
+          <tr>
+            <th class="sortable" onclick="sortColumn(0)">S.No <i class="fas fa-sort"></i></th>
+            <th class="sortable" onclick="sortColumn(1)">District <i class="fas fa-sort"></i></th>
+            <th class="sortable" onclick="sortColumn(2)">Organization <i class="fas fa-sort"></i></th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Contact Person</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- Data will be populated by JavaScript -->
+        </tbody>
+      </table>
+      
+      <div id="emptyState" class="empty-state" style="display: none;">
+        <i class="fas fa-search"></i>
+        <h3>No organizations found</h3>
+        <p>Try adjusting your search or filter to find what you're looking for</p>
+        <button class="btn btn-primary" onclick="resetFilters()">
+          <i class="fas fa-redo"></i> Reset Filters
+        </button>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="exportToCSV()">
+        <i class="fas fa-file-export"></i> Export to CSV
+      </button>
+      <button class="btn btn-secondary" onclick="window.print()">
+        <i class="fas fa-print"></i> Print Directory
+      </button>
+      <a href="dashboard.php" class="btn btn-primary">
+        <i class="fas fa-tachometer-alt"></i> Go to Dashboard
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Sample data
+    const organizations = [
+      {
+        id: 1,
+        district: "Thrissur",
+        organization: "SWASRAYA-Special Child Development and Vocational Training centre for Differently Abled",
+        email: "swasraya91@gmail.com",
+        address: "15/207, Swasraya Special Child Development and Vocational Training Centre for Differently - Abled, P.O KutturNear Neithalakavu Temple, Thrissur - 680013",
+        phone: "9447969795",
+        person: "Mrs.Shantha Menon"
+      },
+      {
+        id: 2,
+        district: "Kottayam",
+        organization: "SUKRUTHAM CHARITABLE TRUST",
+        email: "sukrutham.chry@gmail.com",
+        address: "32/243, MANCHADIKKARAMAHADEVA TEMPLE, VAZHAPPALLY, CHANGANASSERRY - 686101",
+        phone: "9497579695",
+        person: "O R Haridas"
+      },
+      {
+        id: 3,
+        district: "Kollam",
+        organization: "Manovikas School for Mentally Challenged",
+        email: "manovikas@gmail.com",
+        address: "227, Palliserikkal PostSasthamcotta, Kollam - 690521",
+        phone: "9562460802",
+        person: "Shri. D. Jacob"
+      },
+      {
+        id: 4,
+        district: "Malappuram",
+        organization: "MADIN SCHOOL FOR THE INTELLECTUALLY DEFICIENT RUN BY MADINUSSAQUAFATHIL ISLAMIYYA",
+        email: "secretary@madin.edu.in",
+        address: "29/56 A, B, C, Swalath NagarMelmuri, Malappuram - 676517",
+        phone: "9447348786",
+        person: "Muhammed Pary"
+      },
+      {
+        id: 5,
+        district: "Wayanad",
+        organization: "PRERANA SPECIAL SCHOOL UNIT OF MANAVASEVA CHARITABLE TRUST",
+        email: "preranaspecialschool199@gmail.com",
+        address: "7, PuliyarmalaPuliyarmala, Kalpetta - 673121",
+        phone: "9495249963",
+        person: "M D VENKITTA SUBRAHMANIAN"
+      },
+      {
+        id: 6,
+        district: "Thrissur",
+        organization: "Social Action Forum Irinjalakuda",
+        email: "socialactionijk@gmail.com",
+        address: "Social Action Forum Irinjalakuda, Cathedral Junction WestIrinjalakuda, Irinjalakuda - 680121",
+        phone: "8547138986",
+        person: "Fr. Varghese Paul"
+      },
+      {
+        id: 7,
+        district: "Kozhikode",
+        organization: "V.K Mohamed Charitable Trust",
+        email: "mail@vkspecialschool.com",
+        address: "19/2026F, 4th Floor,Indus AvenueKallai Road, Kozhikkode - 673002",
+        phone: "9847214957",
+        person: "V.K.MOHAMMED ASHRAF"
+      },
+      {
+        id: 8,
+        district: "Pathanamthitta",
+        organization: "Assisi Centre School For Mentally Challenged",
+        email: "assisicentre2013@gmail.com",
+        address: "420, chunkapparaCHUNKAPPARA, chunkappara - 686547",
+        phone: "9400996799",
+        person: "POPPY MATHEW"
+      },
+      {
+        id: 9,
+        district: "Thiruvananthapuram",
+        organization: "GRAMA JYOTHI NATIONAL INSTITUTE FOR THE DIFFERENTLY ABLED",
+        email: "gramajyothisschool@gmail.com",
+        address: "GRAMA JYOTHI SPECIAL SCHOOL, PAZHAKUTTY P.ONEDUMANGAD, NEDUMANGAD - 695561",
+        phone: "9387814299",
+        person: "THOMAS MAMMEN"
+      },
+      {
+        id: 10,
+        district: "Kottayam",
+        organization: "SNEHARAM SPECIAL SCHOOL FOR MENTALLY RETARDED, PALA",
+        email: "sneharamss.pala@gmail.com",
+        address: "90, KochidappadyPala East P.O., Pala - 686575",
+        phone: "9142849161",
+        person: "Sr.Carmel Geo sms"
+      }
+    ];
+
+    let currentSortColumn = null;
+    let sortDirection = 1; // 1 for ascending, -1 for descending
+    let filteredData = [...organizations];
+
+    // Initialize the table
+    document.addEventListener('DOMContentLoaded', function() {
+      populateTable();
+      populateDistrictFilter();
+      updateResultsCount();
+    });
+
+    function populateTable() {
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+      
+      filteredData.forEach((org, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${org.id}</td>
+          <td><span class="district-badge">${org.district}</span></td>
+          <td class="organization-cell">${org.organization}</td>
+          <td class="email-cell"><a href="mailto:${org.email}">${org.email}</a></td>
+          <td>${org.address}</td>
+          <td class="phone-cell"><i class="fas fa-phone-alt"></i> ${org.phone}</td>
+          <td>${org.person}</td>
+        `;
+        tbody.appendChild(row);
+      });
+      
+      // Show/hide empty state
+      const emptyState = document.getElementById('emptyState');
+      emptyState.style.display = filteredData.length === 0 ? 'block' : 'none';
+    }
+
+    function populateDistrictFilter() {
+      const districtFilter = document.getElementById('districtFilter');
+      const districts = [...new Set(organizations.map(org => org.district))].sort();
+      
+      districts.forEach(district => {
+        const option = document.createElement('option');
+        option.value = district;
+        option.textContent = district;
+        districtFilter.appendChild(option);
+      });
+    }
+
+    function searchTable() {
+      const input = document.getElementById("searchInput");
+      const filter = input.value.toLowerCase();
+      
+      filteredData = organizations.filter(org => {
+        return Object.values(org).some(value => 
+          value.toString().toLowerCase().includes(filter)
+        );
+      });
+      
+      populateTable();
+      updateResultsCount();
+      highlightSearchTerms(filter);
+    }
+
+    function filterByDistrict() {
+      const districtFilter = document.getElementById("districtFilter");
+      const selectedDistrict = districtFilter.value;
+      
+      if (!selectedDistrict) {
+        filteredData = [...organizations];
+      } else {
+        filteredData = organizations.filter(org => 
+          org.district === selectedDistrict
+        );
+      }
+      
+      populateTable();
+      updateResultsCount();
+    }
+
+    function sortTable() {
+      const sortFilter = document.getElementById("sortFilter");
+      const value = parseInt(sortFilter.value);
+      
+      switch(value) {
+        case 1: // A-Z Organization
+          filteredData.sort((a, b) => a.organization.localeCompare(b.organization));
+          break;
+        case 2: // Z-A Organization
+          filteredData.sort((a, b) => b.organization.localeCompare(a.organization));
+          break;
+        case 3: // District A-Z
+          filteredData.sort((a, b) => a.district.localeCompare(b.district));
+          break;
+        case 4: // District Z-A
+          filteredData.sort((a, b) => b.district.localeCompare(a.district));
+          break;
+        default:
+          filteredData.sort((a, b) => a.id - b.id);
+      }
+      
+      populateTable();
+    }
+
+    function sortColumn(columnIndex) {
+      const tbody = document.querySelector('#tableBody');
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      
+      // Remove previous sort indicators
+      document.querySelectorAll('th i').forEach(icon => {
+        icon.className = 'fas fa-sort';
+      });
+      
+      // Update sort indicator
+      const headerIcon = document.querySelectorAll('th')[columnIndex].querySelector('i');
+      
+      if (currentSortColumn === columnIndex) {
+        sortDirection *= -1;
+      } else {
+        currentSortColumn = columnIndex;
+        sortDirection = 1;
+      }
+      
+      headerIcon.className = sortDirection === 1 ? 'fas fa-sort-up' : 'fas fa-sort-down';
+      
+      rows.sort((a, b) => {
+        const aValue = a.cells[columnIndex].textContent;
+        const bValue = b.cells[columnIndex].textContent;
+        
+        // Special handling for S.No column
+        if (columnIndex === 0) {
+          return sortDirection * (parseInt(aValue) - parseInt(bValue));
+        }
+        
+        return sortDirection * aValue.localeCompare(bValue);
+      });
+      
+      rows.forEach(row => tbody.appendChild(row));
+      updateResultsCount();
+    }
+
+    function highlightSearchTerms(term) {
+      if (!term) return;
+      
+      const rows = document.querySelectorAll('#tableBody tr');
+      rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        cells.forEach(cell => {
+          const originalText = cell.textContent;
+          const regex = new RegExp(`(${term})`, 'gi');
+          const highlighted = originalText.replace(regex, '<mark class="highlight">$1</mark>');
+          
+          // Only update if a match was found
+          if (highlighted !== originalText) {
+            cell.innerHTML = highlighted;
+          }
+        });
+      });
+    }
+
+    function resetFilters() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('districtFilter').value = '';
+      document.getElementById('sortFilter').value = '0';
+      filteredData = [...organizations];
+      populateTable();
+      updateResultsCount();
+      
+      // Reset sort indicators
+      document.querySelectorAll('th i').forEach(icon => {
+        icon.className = 'fas fa-sort';
+      });
+      currentSortColumn = null;
+      sortDirection = 1;
+    }
+
+    function updateResultsCount() {
+      const count = filteredData.length;
+      const total = organizations.length;
+      const resultsCount = document.getElementById('resultsCount');
+      resultsCount.textContent = `Showing ${count} of ${total} organization${total !== 1 ? 's' : ''}`;
+    }
+
+    function exportToCSV() {
+      let csv = 'S.No,District,Organization,Email,Address,Phone,Contact Person\n';
+      
+      filteredData.forEach(org => {
+        csv += `"${org.id}","${org.district}","${org.organization}","${org.email}","${org.address}","${org.phone}","${org.person}"\n`;
+      });
+      
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'kerala_special_organizations.csv';
+      a.click();
+      window.URL.revokeObjectURL(url);
+      
+      // Show success message
+      const resultsCount = document.getElementById('resultsCount');
+      const originalText = resultsCount.textContent;
+      resultsCount.textContent = 'CSV exported successfully!';
+      resultsCount.style.background = 'var(--success-color)';
+      
+      setTimeout(() => {
+        resultsCount.textContent = originalText;
+        resultsCount.style.background = 'var(--accent-color)';
+      }, 2000);
+    }
+
+    // Optional: Add keyboard shortcut for dashboard
+    document.addEventListener('keydown', function(e) {
+      // Alt + H to go to dashboard
+      if (e.altKey && e.key === 'h') {
+        window.location.href = 'dashboard.php';
+      }
+      
+      // Escape key to clear search
+      if (e.key === 'Escape') {
+        document.getElementById('searchInput').value = '';
+        searchTable();
+      }
+    });
+  </script>
+</body>
+</html>

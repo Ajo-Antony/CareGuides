@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Lion and the Mouse - Animated Story</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #FFE66D;
+            --dark: #292F36;
+            --light: #F7FFF7;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Comic Sans MS', 'Marker Felt', 'Chalkboard SE', cursive, sans-serif;
+            padding: 20px;
+            color: var(--dark);
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            min-height: 100vh;
+        }
+
+        
+
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .loader-animal {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+        }
+
+        .lion-loader {
+            top: 0;
+            left: 30px;
+            animation: bounce 2s infinite;
+            color: #FF9F1C;
+        }
+
+        .mouse-loader {
+            bottom: 0;
+            right: 30px;
+            animation: bounce 2s infinite 0.5s;
+            color: #6B717E;
+        }
+
+        .progress-container {
+            width: 80%;
+            max-width: 300px;
+            height: 20px;
+            background: #E0E0E0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #FF9F1C, #FF6B6B);
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+            background: linear-gradient(90deg, #FF6B6B, #FF9F1C);
+   
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 8s linear infinite;
+        }
+
+        .story-container {
+            max-width: 900px;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+
+        .story-content {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            line-height: 1.8;
+            font-size: 1.2rem;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-content:hover {
+            transform: rotateY(5deg) rotateX(2deg);
+        }
+
+        .story-content::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: linear-gradient(90deg, #FF9F1C, #FF6B6B, #4ECDC4);
+        }
+
+        .story-paragraph {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s;
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: paragraphEntrance 0.5s forwards;
+        }
+
+        .story-paragraph:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: scale(1.02) translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .moral {
+            margin-top: 30px;
+            font-weight: bold;
+            color: var(--secondary);
+            font-size: 1.4rem;
+            text-align: center;
+            padding: 15px;
+            border: 3px dashed var(--secondary);
+            border-radius: 15px;
+            background: rgba(78, 205, 196, 0.1);
+            animation: pulse 2s infinite;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        .nav-button {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, var(--primary), #FF9F1C);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            background: linear-gradient(135deg, #FF5252, #FF8A1C);
+        }
+
+        .nav-button:active {
+            transform: translateY(1px);
+        }
+
+        .narration-controls {
+            max-width: 800px;
+            margin: 30px auto;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .narration-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .voice-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-grow: 1;
+        }
+
+        .voice-selector label {
+            font-weight: bold;
+            color: var(--dark);
+            white-space: nowrap;
+        }
+
+        .voice-selector select {
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 8px;
+            background-color: white;
+            border: 2px solid var(--secondary);
+            flex-grow: 1;
+            min-width: 200px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .voice-selector select:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+        }
+
+        .narration-button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            background: linear-gradient(135deg, var(--secondary), #2EC4B6);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .narration-button:hover {
+            background: linear-gradient(135deg, #3BBDB5, #1EAE9E);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .character-icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .lion-icon {
+            color: #FF9F1C;
+        }
+
+        .mouse-icon {
+            color: #6B717E;
+        }
+
+        .floating-animals {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .floating-animal {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.2;
+            animation: float 15s linear infinite;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes paragraphEntrance {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(100vw, 100vh) rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .story-content {
+                padding: 20px;
+            }
+            
+            .narration-wrapper {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .voice-selector {
+                width: 100%;
+            }
+            
+            .narration-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+   
+    <!-- Main Content -->
+    <div class="story-container">
+        <h1 class="animate__animated animate__bounceIn">
+            <i class="fas fa-paw lion-icon"></i>
+            The Lion and the Mouse
+            <i class="fas fa-mouse mouse-icon"></i>
+        </h1>
+        
+        <div class="narration-controls animate__animated animate__fadeIn">
+            <div class="narration-wrapper">
+                <div class="voice-selector">
+                    <label for="voiceSelect"><i class="fas fa-user-tie"></i> Choose Narrator:</label>
+                    <select id="voiceSelect">
+                        <option value="">Loading voices...</option>
+                    </select>
+                </div>
+                <button class="narration-button" onclick="toggleNarration()">
+                    <i class="fas fa-volume-up" id="volumeIcon"></i> Play Narration
+                </button>
+            </div>
+        </div>
+        
+        <div class="story-content animate__animated animate__fadeInUp" id="storyText">
+            <p class="story-paragraph" style="animation-delay: 0.1s">
+                <i class="fas fa-sun character-icon" style="color: #FFD700;"></i>
+                One bright morning, deep inside a jungle, a mighty lion was napping under a shady tree. As he slept, a little mouse scurried around, playing and chasing leaves blown by the wind.
+            </p>
+            
+            <p class="story-paragraph" style="animation-delay: 0.2s">
+                <i class="fas fa-paw character-icon lion-icon"></i>
+                Suddenly, the playful mouse ran over the lion's paw. The lion woke up with a loud roar and trapped the tiny creature beneath his huge paw.
+            </p>
+            
+            <p class="story-paragraph" style="animation-delay: 0.3s">
+                <i class="fas fa-angry character-icon" style="color: #FF4500;"></i>
+                "How dare you disturb my sleep, little one?" growled the lion, ready to eat the frightened mouse.
+            </p>
+            
+            <p class="story-paragraph" style="animation-delay: 0.4s">
+                <i class="fas fa-mouse character-icon mouse-icon"></i>
+                Terrified, the mouse pleaded, "Oh mighty lion, please forgive me! If you let me go, I might be able to help you one day."
+            </p>
+            
+            <p class="story-paragraph" style="animation-delay: 0.5s">
+                <i class="fas fa-laugh character-icon" style="color: #FFA500;"></i>
+                The lion laughed heartily. "How could such a tiny creature ever help me, the king of the jungle?"
+            </p>
+            
+            <p class="story-paragraph" style="animation-delay: 0.6s">
+                <i class="fas fa-hand-holding-heart character-icon" style="color: #FF69B4;"></i>
+                But feeling generous, the lion lifted his paw and let the mouse scurry away.
+            </p>
+            
+            <p class="story-paragraph" style="animation-delay: 0.7s">
+                <i class="fas fa-clock character-icon" style="color: #4682B4;"></i>
+                Days passed, and the lion forgot about the encounter. But one afternoon, while wandering through the forest, he fell into a hunter's net.
+            </p>
+            
+            <p class="story-paragraph" style="animation-delay: 0.8s">
+                <i class="fas fa-trapped character-icon" style="color: #8B4513;"></i>
+                The lion struggled and roared loudly, but the more he tried, the tighter the net became around him.
+            </p>
+            
+            <p class="story-paragraph" style="animation-delay: 0.9s">
+                <i class="fas fa-running character-icon mouse-icon"></i>
+                Hearing the lion's desperate roars, the little mouse rushed to the scene.
+            </p>
+            
+            <p class="story-paragraph" style="animation-delay: 1.0s">
+                <i class="fas fa-teeth character-icon" style="color: #A9A9A9;"></i>
+                Without wasting a moment, the mouse began nibbling at the ropes with his sharp teeth.
+            </p>
+            
+            <p class="story-paragraph" style="animation-delay: 1.1s">
+                <i class="fas fa-cut character-icon" style="color: #696969;"></i>
+                Bit by bit, the ropes began to snap, and soon, the lion was free!
+            </p>
+            
+            <p class="story-paragraph" style="animation-delay: 1.2s">
+                <i class="fas fa-grin-tears character-icon lion-icon"></i>
+                Overwhelmed with gratitude, the lion said, "I was wrong, little mouse. You saved my life, and I will always be thankful."
+            </p>
+            
+            <p class="story-paragraph" style="animation-delay: 1.3s">
+                <i class="fas fa-smile character-icon mouse-icon"></i>
+                The mouse smiled and replied, "Even the smallest creature can help a great king."
+            </p>
+            
+            <p class="story-paragraph" style="animation-delay: 1.4s">
+                <i class="fas fa-heart character-icon" style="color: #FF1493;"></i>
+                From that day, the lion and the mouse became the best of friends and looked after each other.
+            </p>
+            
+            <p class="story-paragraph" style="animation-delay: 1.5s">
+                <i class="fas fa-balance-scale character-icon" style="color: #9370DB;"></i>
+                They taught everyone in the jungle that kindness should never be measured by size or strength.
+            </p>
+            
+            <p class="story-paragraph" style="animation-delay: 1.6s">
+                <i class="fas fa-users character-icon" style="color: #20B2AA;"></i>
+                Whenever animals in the forest saw them together, they were reminded of how friendship can grow from unexpected places.
+            </p>
+            
+            <p class="story-paragraph" style="animation-delay: 1.7s">
+                <i class="fas fa-crown character-icon lion-icon"></i>
+                The lion became humbler and often shared this story with others who thought they were too important to be kind.
+            </p>
+            
+            <p class="story-paragraph" style="animation-delay: 1.8s">
+                <i class="fas fa-chess-pawn character-icon mouse-icon"></i>
+                The mouse too told his fellow mice to never be afraid to help someone bigger than themselves.
+            </p>
+            
+            <p class="story-paragraph" style="animation-delay: 1.9s">
+                <i class="fas fa-home character-icon" style="color: #8FBC8F;"></i>
+                And so, the lion and the mouse lived happily, protecting the jungle as a team.
+            </p>
+            
+            <p class="story-paragraph" style="animation-delay: 2.0s">
+                <i class="fas fa-graduation-cap character-icon" style="color: #4682B4;"></i>
+                Everyone admired their bond and learned a valuable lesson about courage, kindness, and gratitude.
+            </p>
+
+            <p class="moral animate__animated animate__pulse animate__infinite animate__slower">
+                <i class="fas fa-star character-icon" style="color: #FFD700;"></i>
+                Moral: Kindness is never wasted.
+                <i class="fas fa-star character-icon" style="color: #FFD700;"></i>
+            </p>
+
+            <div class="nav-buttons">
+                <a href="story.html" class="nav-button">
+                    <i class="fas fa-home"></i> Storyboard
+                </a>
+                <a href="story2.html" class="nav-button">
+                    Next Story <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Animal Decorations -->
+    <div class="floating-animals" id="floatingAnimals"></div>
+
+    <script>
+        // Simulate loading with progress bar
+        const loadingScreen = document.getElementById('loadingScreen');
+        const progressBar = document.getElementById('progressBar');
+        const floatingAnimals = document.getElementById('floatingAnimals');
+        
+        // Create 50 floating animals
+        const animalIcons = ['paw', 'mouse', 'leaf', 'tree', 'feather', 'fish', 'bug', 'crow', 'dog', 'cat', 'spider', 'frog', 'hippo', 'horse', 'kiwi-bird', 'otter', 'dove'];
+        
+        for (let i = 0; i < 50; i++) {
+            const animal = document.createElement('div');
+            animal.className = 'floating-animal';
+            animal.innerHTML = `<i class="fas fa-${animalIcons[Math.floor(Math.random() * animalIcons.length)]}"></i>`;
+            
+            // Random position and animation duration
+            animal.style.left = `${Math.random() * 100}%`;
+            animal.style.top = `${Math.random() * 100}%`;
+            animal.style.animationDuration = `${10 + Math.random() * 20}s`;
+            animal.style.animationDelay = `${Math.random() * 5}s`;
+            animal.style.opacity = `${0.1 + Math.random() * 0.3}`;
+            animal.style.transform = `scale(${0.5 + Math.random() * 1.5})`;
+            
+            floatingAnimals.appendChild(animal);
+        }
+        
+        // Simulate loading progress
+        let progress = 0;
+        const loadingInterval = setInterval(() => {
+            progress += Math.random() * 10;
+            if (progress > 100) progress = 100;
+            progressBar.style.width = `${progress}%`;
+            
+            if (progress >= 100) {
+                clearInterval(loadingInterval);
+                setTimeout(() => {
+                    loadingScreen.classList.add('hidden');
+                    
+                    // Trigger paragraph animations after loading
+                    const paragraphs = document.querySelectorAll('.story-paragraph');
+                    paragraphs.forEach((para, index) => {
+                        setTimeout(() => {
+                            para.style.animation = 'paragraphEntrance 0.5s forwards';
+                        }, index * 100);
+                    });
+                }, 500);
+            }
+        }, 200);
+        
+        // Speech Synthesis Setup
+        const synth = window.speechSynthesis;
+        const voiceSelect = document.getElementById("voiceSelect");
+        const volumeIcon = document.getElementById("volumeIcon");
+        let voices = [];
+        let utterance;
+        let isSpeaking = false;
+
+        function populateVoices() {
+            voices = synth.getVoices();
+            voiceSelect.innerHTML = "";
+            
+            const defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.textContent = "Select a voice...";
+            voiceSelect.appendChild(defaultOption);
+
+            voices.forEach((voice, index) => {
+                const option = document.createElement("option");
+                option.value = index;
+                option.textContent = `${voice.name} (${voice.lang})`;
+                
+                if (voice.default) {
+                    option.textContent += " ★";
+                }
+                
+                if (voice.name.toLowerCase().includes("female") || voice.lang.includes("GB") || voice.lang.includes("US")) {
+                    option.textContent += " 👩";
+                } else if (voice.name.toLowerCase().includes("male")) {
+                    option.textContent += " 👨";
+                } else if (voice.name.toLowerCase().includes("child")) {
+                    option.textContent += " 👧";
+                }
+
+                voiceSelect.appendChild(option);
+            });
+        }
+
+        // Initial population
+        populateVoices();
+        
+        // Some browsers load voices asynchronously
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = populateVoices;
+        }
+
+        function toggleNarration() {
+            if (isSpeaking) {
+                synth.cancel();
+                isSpeaking = false;
+                volumeIcon.className = "fas fa-volume-up";
+                return;
+            }
+
+            const selectedIndex = voiceSelect.value;
+            if (!selectedIndex) {
+                alert("Please select a narrator voice first!");
+                return;
+            }
+            
+            const selectedVoice = voices[selectedIndex];
+            const storyText = document.getElementById("storyText").innerText;
+
+            utterance = new SpeechSynthesisUtterance(storyText);
+            if (selectedVoice) {
+                utterance.voice = selectedVoice;
+            }
+            
+            // Configure speech
+            utterance.rate = 0.9;
+            utterance.pitch = 1;
+            utterance.volume = 1;
+            
+            // Highlight current speaking paragraph
+            utterance.onboundary = (event) => {
+                const charIndex = event.charIndex;
+                const text = storyText.substring(0, charIndex);
+                const paragraphMatches = text.match(/\n/g);
+                const currentParagraph = paragraphMatches ? paragraphMatches.length : 0;
+                
+                // Reset all paragraphs
+                document.querySelectorAll('.story-paragraph').forEach(p => {
+                    p.style.background = 'rgba(255, 255, 255, 0.7)';
+                });
+                
+                // Highlight current paragraph
+                const paragraphs = document.querySelectorAll('.story-paragraph');
+                if (paragraphs[currentParagraph]) {
+                    paragraphs[currentParagraph].style.background = 'rgba(255, 214, 10, 0.3)';
+                }
+            };
+
+            synth.speak(utterance);
+            isSpeaking = true;
+            volumeIcon.className = "fas fa-volume-mute";
+
+            utterance.onend = () => {
+                isSpeaking = false;
+                volumeIcon.className = "fas fa-volume-up";
+                
+                // Reset all paragraphs
+                document.querySelectorAll('.story-paragraph').forEach(p => {
+                    p.style.background = 'rgba(255, 255, 255, 0.7)';
+                });
+            };
+        }
+        
+        // Add click effects to buttons
+        document.querySelectorAll('.nav-button, .narration-button').forEach(button => {
+            button.addEventListener('click', function() {
+                this.style.transform = 'translateY(2px)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 100);
+            });
+        });
+        
+        // Add hover effects to paragraphs
+        document.querySelectorAll('.story-paragraph').forEach(para => {
+            para.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.02) translateY(-5px)';
+                this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+            });
+            
+            para.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+                this.style.boxShadow = '';
+            });
+        });
+    </script>
+</body>
+
+</html>

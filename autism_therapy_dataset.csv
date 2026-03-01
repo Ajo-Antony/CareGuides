@@ -1,0 +1,1201 @@
+Age	ASD_Level	Speech_Delay	Motor_Delay	Past_Therapies	Feedback	Effective_Therapy
+15	3	1	1	Speech	neutral	OT
+2	1	0	0	Play;OT	negative	ABA
+11	3	0	0	ABA	positive	ABA
+10	1	0	0		positive	ABA
+3	2	0	1		neutral	OT
+5	3	0	0	OT	positive	OT
+9	3	0	0		negative	ABA
+4	3	1	1		positive	ABA
+11	3	1	0		positive	ABA
+14	1	1	1		positive	ABA
+15	1	1	0	OT;Play	positive	Play
+7	2	0	0	Speech;Play	positive	Speech
+3	3	1	0	ABA;OT	neutral	Speech
+7	1	1	1	Play	positive	Play
+10	3	0	1		neutral	OT
+11	2	1	0	OT;Speech	positive	Speech
+7	2	1	0	ABA	negative	Speech
+11	3	1	0	OT;Speech	positive	OT
+15	2	1	1	Play;OT	negative	Speech
+6	2	0	1		positive	ABA
+14	2	1	1	ABA	positive	ABA
+15	1	1	0		negative	Speech
+11	2	0	1	ABA	positive	ABA
+3	2	1	0	Play	neutral	Speech
+14	3	0	1		negative	OT
+5	3	0	0	OT	positive	OT
+9	2	0	0		neutral	OT
+15	3	0	1		neutral	OT
+10	1	1	1	Play	neutral	Speech
+11	3	0	0		neutral	ABA
+7	1	1	0		positive	ABA
+15	2	1	1	ABA;Play	neutral	Speech
+15	2	1	0	Play;Speech	positive	Speech
+8	3	1	0		neutral	Speech
+11	3	0	1	OT	neutral	ABA
+7	2	1	0		positive	ABA
+14	1	0	1	Speech	neutral	OT
+4	1	1	1		positive	ABA
+3	3	1	1		positive	ABA
+14	2	0	1	Play;Speech	positive	Speech
+14	1	1	1	ABA	positive	ABA
+7	2	0	0		positive	ABA
+11	1	1	1	ABA;OT	negative	Speech
+14	2	1	1	Speech	neutral	OT
+12	2	0	0		positive	ABA
+7	2	1	1	Play;Speech	negative	OT
+3	3	1	1		positive	ABA
+9	1	1	1	Play;ABA	positive	ABA
+4	3	0	0		positive	ABA
+6	1	1	1	OT	positive	OT
+15	1	0	0		positive	ABA
+13	2	1	0		neutral	Speech
+2	1	1	0	ABA	negative	Speech
+14	1	1	0		negative	Speech
+5	1	0	1		negative	OT
+8	2	1	1	OT	positive	OT
+8	3	1	1	ABA;OT	negative	Speech
+8	3	0	1	Speech	positive	Speech
+7	1	0	1		neutral	OT
+14	2	1	1		negative	Speech
+14	1	1	1	Speech;OT	positive	Speech
+14	2	0	0	ABA;OT	positive	OT
+2	3	0	0		positive	ABA
+6	3	1	1		positive	ABA
+5	1	0	0	Speech	positive	Speech
+3	2	1	1	Speech	positive	Speech
+6	3	1	1	Speech	negative	OT
+5	3	1	0	ABA	positive	ABA
+13	2	1	1		neutral	Speech
+13	3	0	0	Play;Speech	positive	Play
+14	1	0	0		neutral	OT
+15	1	0	1	Play	positive	Play
+5	1	0	0	OT	positive	OT
+13	1	1	1	ABA;Speech	positive	Speech
+10	3	0	1		positive	ABA
+15	1	1	1		neutral	Speech
+12	1	1	1	Play	positive	Play
+12	1	1	1	Play	positive	Play
+6	1	1	1	Play;ABA	negative	Speech
+5	3	1	0		positive	ABA
+5	1	1	1	Play;OT	positive	OT
+6	2	0	0	ABA;Play	positive	Play
+10	1	0	0		positive	ABA
+9	3	0	1	ABA	positive	ABA
+2	1	1	1		positive	ABA
+3	1	0	1		neutral	OT
+11	2	1	0		neutral	Speech
+11	2	0	1	ABA;OT	negative	Play
+5	3	0	1	Play;OT	negative	ABA
+11	3	0	0		positive	ABA
+4	2	1	0	OT;ABA	neutral	Speech
+3	3	0	1	ABA	neutral	OT
+7	3	0	1	Speech;ABA	neutral	OT
+10	2	0	1	Speech	positive	Speech
+2	2	1	0	OT;ABA	neutral	Speech
+3	1	0	1	ABA	neutral	OT
+2	1	0	0		negative	Speech
+14	2	1	0	Speech;OT	positive	OT
+6	3	0	0	ABA	positive	ABA
+2	2	0	0	OT	neutral	ABA
+2	2	0	0		positive	ABA
+7	2	0	0	Play;Speech	neutral	ABA
+15	1	0	1		positive	ABA
+10	3	1	1		neutral	Speech
+7	2	0	1	Speech	neutral	OT
+2	2	1	0	Speech;ABA	negative	ABA
+7	3	1	0		neutral	Speech
+13	2	0	1	ABA	neutral	OT
+7	3	0	0	ABA	neutral	OT
+14	3	0	1		negative	OT
+7	3	1	0		negative	Speech
+2	1	1	0	Play	positive	Play
+7	1	0	0		neutral	None
+14	3	1	0	Speech;Play	positive	Speech
+14	3	1	0	OT;Speech	neutral	ABA
+12	2	1	1	Play;ABA	neutral	Speech
+13	2	1	0		positive	ABA
+7	2	0	0	Speech	positive	Speech
+7	1	1	1	OT;Speech	positive	Speech
+12	3	0	0		positive	ABA
+12	2	0	1		positive	ABA
+5	1	0	1		neutral	OT
+14	1	1	1		neutral	Speech
+3	1	1	1	Play	neutral	Speech
+6	2	0	1		positive	ABA
+8	1	0	0	ABA;OT	positive	OT
+2	2	1	0		neutral	Speech
+8	2	1	1	ABA	positive	ABA
+11	3	1	0		positive	ABA
+9	3	1	1		negative	Speech
+15	3	1	1	Speech;ABA	neutral	OT
+12	3	1	1	Speech;Play	positive	Speech
+10	1	1	0	Play	positive	Play
+5	2	1	0	Speech;OT	positive	OT
+15	3	0	0		neutral	ABA
+15	2	1	1	OT;ABA	positive	ABA
+14	3	0	0		neutral	ABA
+11	2	0	1	Play;Speech	neutral	OT
+7	3	0	1	OT;ABA	negative	Play
+15	3	1	1	Play	positive	Play
+6	1	0	1	Speech	negative	OT
+10	1	0	1	OT;Play	positive	OT
+12	3	0	0	Speech;Play	positive	Play
+7	3	1	0	Speech	positive	Speech
+2	2	0	1	OT;Play	positive	Play
+2	3	0	1	Play;OT	positive	Play
+12	1	1	1	Play	positive	Play
+9	1	0	1		negative	OT
+15	1	0	0	Speech	negative	OT
+5	1	1	1	OT	positive	OT
+2	1	1	1	Play;OT	positive	OT
+11	2	1	1	ABA;Play	negative	Speech
+4	2	1	1		negative	Speech
+6	3	0	1	ABA;OT	positive	ABA
+11	1	1	0	ABA	positive	ABA
+6	1	1	1		negative	Speech
+2	1	0	0		neutral	Speech
+15	1	0	1	OT;Speech	negative	ABA
+13	2	0	0	Speech;Play	positive	Speech
+10	3	1	0	OT	negative	Speech
+5	3	1	1	ABA;Play	positive	Play
+2	1	0	1	OT	neutral	ABA
+6	3	0	0	Play;ABA	neutral	None
+11	3	1	0		neutral	Speech
+13	3	1	0		positive	ABA
+2	2	0	0		negative	Speech
+10	2	0	0	OT;Play	neutral	Play
+12	2	0	0	Play	positive	Play
+8	3	0	0	ABA	positive	ABA
+6	3	1	0		negative	Speech
+6	3	0	0		neutral	ABA
+14	2	0	1	ABA;Play	neutral	OT
+11	2	0	1	Play;ABA	positive	Play
+10	1	0	0	ABA	neutral	Play
+6	1	0	0	OT;ABA	positive	OT
+5	2	0	1	Speech	positive	Speech
+13	2	1	1		negative	Speech
+10	1	0	0	Speech;OT	neutral	Play
+11	1	1	0	Play	positive	Play
+9	3	0	0		positive	ABA
+12	1	1	1		positive	ABA
+13	2	0	0	ABA	neutral	Play
+11	1	0	0	ABA;Speech	positive	Speech
+15	1	0	1	OT;Play	neutral	OT
+14	3	1	1	Speech	positive	Speech
+2	2	1	0	OT;Speech	negative	ABA
+14	2	0	0	ABA;Speech	neutral	OT
+11	3	0	1	ABA	neutral	OT
+3	3	1	0		positive	ABA
+4	3	0	0		neutral	ABA
+13	2	1	0	OT;ABA	positive	ABA
+9	3	1	0	Play	positive	Play
+9	2	1	0	Speech	positive	Speech
+2	1	1	1		positive	ABA
+7	3	1	1	Speech	positive	Speech
+7	1	1	1	OT	negative	Speech
+8	1	1	0	Speech;OT	positive	Speech
+6	3	1	1		neutral	Speech
+10	3	0	1	ABA;Speech	positive	ABA
+11	3	0	0		positive	ABA
+12	3	1	1	Play;OT	negative	Speech
+12	1	0	1		negative	OT
+3	1	0	1		negative	OT
+6	3	0	1		negative	OT
+12	1	0	0		positive	ABA
+7	2	1	0		positive	ABA
+4	1	1	0	Speech;ABA	negative	ABA
+5	1	0	1	OT;Speech	positive	Speech
+7	2	0	0	ABA	positive	ABA
+12	1	1	1	Speech;OT	positive	Speech
+2	2	0	0	Play;OT	neutral	ABA
+15	1	1	0	ABA	positive	ABA
+13	2	0	1	OT;Speech	neutral	Speech
+10	3	0	0		negative	ABA
+2	1	1	0	Speech;OT	negative	ABA
+7	3	1	1	Speech;OT	positive	Speech
+15	3	1	0	OT	positive	OT
+15	1	1	0		positive	ABA
+5	2	0	1		positive	ABA
+6	2	1	0		positive	ABA
+7	1	1	1	ABA;Speech	positive	Speech
+4	1	1	0	ABA;Play	positive	Play
+10	2	1	0		neutral	Speech
+4	2	1	1		neutral	Speech
+6	1	0	1		negative	OT
+9	1	1	1		negative	Speech
+8	1	0	1	Speech	neutral	OT
+13	1	1	1	ABA	positive	ABA
+6	2	0	0	Play	negative	None
+5	2	1	0	Play;ABA	positive	ABA
+4	2	1	0	ABA	positive	ABA
+12	3	0	0	Speech;OT	negative	ABA
+5	1	1	1	OT;Speech	positive	OT
+14	1	1	1	OT;Speech	neutral	Speech
+13	2	0	0		negative	Play
+3	2	0	0	OT	positive	OT
+3	1	1	0	ABA	negative	Speech
+6	2	1	1	Play;OT	negative	Speech
+14	1	1	0	Play	neutral	Speech
+8	3	1	0	Speech	positive	Speech
+9	2	0	0	Play	positive	Play
+15	1	1	0		neutral	Speech
+4	1	1	0		positive	ABA
+3	1	0	0	ABA;Speech	neutral	ABA
+14	3	1	1	ABA	positive	ABA
+2	2	0	0		neutral	ABA
+2	2	1	1	Play;Speech	positive	Play
+2	1	1	0	Play;ABA	positive	ABA
+11	1	1	1	ABA	positive	ABA
+4	3	0	0	ABA;Speech	neutral	Speech
+12	2	0	1	Play;ABA	positive	ABA
+4	1	0	1		negative	OT
+11	1	1	1	ABA	neutral	Speech
+7	1	1	0	OT;Play	positive	OT
+11	3	1	0		neutral	Speech
+15	3	1	1	OT	positive	OT
+14	2	0	1	Play;ABA	neutral	OT
+5	2	0	1	Play	positive	Play
+15	2	0	0	Play;Speech	positive	Speech
+15	1	1	0	Play	negative	Speech
+13	3	0	1	ABA	neutral	OT
+14	3	1	0		positive	ABA
+15	2	1	0		positive	ABA
+15	1	1	0		positive	ABA
+13	1	1	1	Speech	positive	Speech
+12	1	1	0	ABA;OT	negative	Speech
+4	3	1	0	Play;OT	neutral	Speech
+3	3	1	0	Speech	positive	Speech
+15	1	1	0	OT;Play	neutral	Speech
+15	3	1	0		neutral	Speech
+9	2	1	0	Play	positive	Play
+8	2	0	1	Play;ABA	positive	ABA
+4	3	1	0		negative	Speech
+15	2	1	0		neutral	Speech
+7	3	0	1		negative	OT
+4	3	0	1	OT;ABA	neutral	ABA
+15	2	0	1	ABA	negative	OT
+8	1	0	0	Speech	positive	Speech
+11	2	1	0	ABA	negative	Speech
+13	2	1	1	OT	neutral	Speech
+5	3	0	1	ABA;Speech	positive	Speech
+9	2	1	1		positive	ABA
+11	1	1	1	Play	negative	Speech
+7	3	1	0		positive	ABA
+5	2	0	1	OT;Play	positive	OT
+3	1	1	0	OT;Play	neutral	Speech
+12	1	0	0	Play;Speech	negative	None
+8	3	1	0		negative	Speech
+2	3	0	1	Speech;OT	positive	OT
+14	2	0	1	OT	positive	OT
+14	2	0	1		positive	ABA
+5	3	0	1	ABA	positive	ABA
+5	3	0	1	Speech	negative	OT
+15	2	1	0		positive	ABA
+11	1	1	1	Speech	negative	OT
+4	1	1	1	OT	neutral	Speech
+4	3	0	0	Play	positive	Play
+15	2	1	0	Speech;ABA	negative	None
+3	2	1	1	OT;ABA	negative	Speech
+5	3	1	0	ABA	neutral	Speech
+11	3	0	0	Play;ABA	positive	Play
+14	2	1	0		neutral	Speech
+13	1	0	1	OT;Play	neutral	OT
+15	1	1	1	Play;OT	neutral	Speech
+8	3	1	1	OT	negative	Speech
+5	1	1	0		positive	ABA
+4	2	1	1	ABA;Play	neutral	Speech
+6	1	0	1		neutral	OT
+10	1	1	1		negative	Speech
+12	1	1	1	OT	positive	OT
+14	2	1	0		negative	Speech
+5	2	1	0	Play;OT	neutral	Speech
+11	1	0	1	ABA	neutral	OT
+14	2	1	1	ABA	positive	ABA
+7	3	1	0		positive	ABA
+11	3	0	0	Play;ABA	neutral	ABA
+7	2	1	1		positive	ABA
+15	3	1	1		neutral	Speech
+11	2	0	0		neutral	Play
+12	2	0	0		positive	ABA
+10	2	1	0		positive	ABA
+9	1	1	1		negative	Speech
+13	2	0	1	Play;ABA	neutral	OT
+12	2	1	1		positive	ABA
+13	2	0	0	OT;Speech	neutral	ABA
+6	3	0	0		neutral	ABA
+8	1	1	0	Speech	positive	Speech
+9	1	0	0		neutral	Play
+6	3	0	0	Speech	negative	ABA
+5	1	0	1		positive	ABA
+10	2	1	1		positive	ABA
+11	2	1	1		positive	ABA
+6	2	1	0	Speech	positive	Speech
+12	1	0	0	ABA;Speech	positive	ABA
+3	2	1	0	ABA;Speech	neutral	ABA
+10	1	0	1	ABA;Play	positive	ABA
+12	2	1	0	ABA	negative	Speech
+2	3	0	1		positive	ABA
+11	2	1	0		neutral	Speech
+4	2	1	0	Play;ABA	positive	ABA
+11	2	0	0	Speech	positive	Speech
+15	3	1	1	Speech;ABA	negative	OT
+14	1	1	1		positive	ABA
+7	1	0	1	Play	positive	Play
+6	3	0	0		positive	ABA
+5	2	1	0	Play;ABA	positive	Play
+10	1	0	1	Play;OT	neutral	Play
+12	2	1	1		positive	ABA
+7	1	0	0	ABA	neutral	Play
+12	3	0	0		neutral	ABA
+14	3	1	0	Speech;OT	positive	OT
+10	2	0	1	Play	positive	Play
+14	1	0	0	ABA;OT	positive	ABA
+9	2	1	0	Play;ABA	negative	Speech
+14	3	1	1	ABA;Speech	positive	ABA
+3	1	0	1	Speech	negative	OT
+13	1	0	1		positive	ABA
+6	2	1	1		neutral	Speech
+4	3	0	0	Play	positive	Play
+8	2	1	0		neutral	Speech
+15	3	1	0	Speech;Play	positive	Play
+12	2	0	1		negative	OT
+5	1	1	0	Play;OT	neutral	Speech
+6	3	0	0		neutral	ABA
+6	2	0	0	OT;ABA	neutral	None
+8	2	1	0	OT;ABA	negative	Speech
+3	3	1	0	Play;OT	positive	Play
+8	3	1	0	Speech;OT	positive	OT
+14	2	0	0		positive	ABA
+10	3	0	0	Play;ABA	neutral	ABA
+12	1	0	1	OT;Play	positive	Play
+13	3	0	1	OT	neutral	ABA
+13	1	1	1		positive	ABA
+12	3	1	0		neutral	Speech
+2	1	1	0	Speech;ABA	neutral	ABA
+9	1	1	0		negative	Speech
+13	3	0	0	Speech;Play	neutral	ABA
+10	2	1	1		neutral	Speech
+6	3	0	1	ABA	negative	OT
+9	3	0	0		positive	ABA
+13	3	1	1	Speech;ABA	neutral	OT
+2	3	0	1	OT	positive	OT
+14	1	0	0	OT;Play	neutral	None
+12	1	0	1	Play;Speech	positive	Speech
+3	1	1	1	ABA	neutral	Speech
+13	3	1	0	ABA;OT	positive	OT
+4	3	1	1	Speech;OT	positive	Speech
+5	2	0	0		positive	ABA
+6	3	0	0		positive	ABA
+15	1	0	1		positive	ABA
+2	2	0	0		positive	ABA
+4	2	0	0	Speech;Play	positive	Speech
+8	3	1	1	Play	positive	Play
+7	1	1	1		neutral	Speech
+13	2	1	0	Play	neutral	Speech
+6	3	0	0		positive	ABA
+3	2	1	1	OT;Play	negative	Speech
+8	1	1	0	Play	positive	Play
+2	1	1	0	Play	neutral	Speech
+11	1	0	0	OT;Speech	positive	Speech
+12	2	1	0	Play;OT	positive	OT
+7	2	1	0		neutral	Speech
+13	1	0	0	Speech	positive	Speech
+4	2	0	1		neutral	OT
+12	2	1	0		positive	ABA
+2	2	1	0	ABA;OT	negative	Speech
+14	1	1	0	ABA	positive	ABA
+11	2	1	1		negative	Speech
+4	3	0	1	OT;Play	negative	ABA
+4	2	0	1	ABA;OT	neutral	Speech
+14	1	0	0	Speech;Play	positive	Play
+10	3	1	1		positive	ABA
+12	1	1	0		positive	ABA
+12	3	1	1	Play;OT	positive	Play
+8	3	0	0		positive	ABA
+4	3	0	1	ABA;Play	positive	Play
+13	1	0	1		positive	ABA
+5	1	0	0	ABA	positive	ABA
+3	3	1	1	ABA	negative	Speech
+2	1	1	0		negative	Speech
+7	1	0	0	OT;Play	positive	OT
+13	1	0	1		positive	ABA
+9	3	1	1	ABA;OT	neutral	Speech
+10	3	0	1		negative	OT
+2	3	1	0		positive	ABA
+15	1	1	0	Play	positive	Play
+6	2	0	1	Speech	neutral	OT
+14	1	1	0		negative	Speech
+9	1	0	0		neutral	Play
+15	3	1	0		positive	ABA
+9	2	0	1	ABA	neutral	OT
+7	2	1	0		negative	Speech
+3	3	0	0		positive	ABA
+8	2	0	1		neutral	OT
+2	3	0	0	Play	positive	Play
+10	2	1	0	Play	neutral	Speech
+12	3	0	1	ABA;Play	neutral	OT
+11	2	0	0	Speech	positive	Speech
+8	2	0	0	OT;ABA	neutral	None
+4	2	0	0		neutral	ABA
+12	1	0	0	Play;Speech	positive	Speech
+2	3	0	1	Play	negative	OT
+14	2	1	1	OT;ABA	positive	OT
+6	3	1	1	Speech;OT	positive	Speech
+12	3	1	0		neutral	Speech
+10	2	1	0	Play;ABA	negative	Speech
+6	2	1	0		neutral	Speech
+2	3	1	1	OT	negative	Speech
+9	2	1	0	Speech;ABA	positive	ABA
+14	1	1	1	Play;ABA	positive	Play
+15	1	1	1	Speech;OT	positive	OT
+4	2	1	1		positive	ABA
+5	1	1	1		negative	Speech
+9	1	0	1	Play;Speech	positive	Speech
+15	3	0	0	Play;ABA	neutral	None
+3	3	0	0		neutral	ABA
+4	1	1	0		positive	ABA
+7	1	0	1	ABA;OT	neutral	Speech
+5	3	1	1		positive	ABA
+6	3	0	1		negative	OT
+5	2	1	0	Speech	negative	Speech
+9	1	0	0	ABA	positive	ABA
+4	2	0	1		positive	ABA
+11	1	0	0		neutral	None
+2	1	1	0	ABA;Play	neutral	Speech
+5	1	1	0		neutral	Speech
+7	2	0	1	Play;Speech	negative	OT
+12	3	0	0	Play	neutral	ABA
+13	2	1	0	OT	negative	Speech
+8	3	1	1	Play	neutral	Speech
+9	2	1	1	OT	neutral	Speech
+7	3	1	0	Play;OT	neutral	Speech
+11	3	0	1	OT;ABA	positive	ABA
+12	1	0	0		positive	ABA
+15	1	1	1	ABA	negative	Speech
+3	1	1	0	ABA;Speech	positive	Speech
+2	3	1	1	Speech	neutral	OT
+3	2	0	0		neutral	Speech
+10	2	0	1	OT;Speech	negative	Play
+3	1	0	0		positive	ABA
+4	3	1	1	Play	positive	Play
+9	2	0	0	ABA	positive	ABA
+7	2	0	0	ABA;OT	neutral	Play
+7	3	1	0		positive	ABA
+3	1	0	1	Speech	positive	Speech
+11	1	0	0	Speech	neutral	Play
+4	2	1	0		neutral	Speech
+11	2	0	0		neutral	Speech
+2	3	0	1		negative	OT
+12	1	1	0	Play;Speech	neutral	ABA
+6	1	1	0		negative	Speech
+11	1	0	1		negative	OT
+4	2	1	1	ABA;Speech	negative	OT
+4	3	0	1	Speech	positive	Speech
+4	2	0	0	Speech;Play	negative	ABA
+6	3	0	1	ABA	positive	ABA
+4	3	1	1	ABA;Play	negative	Speech
+4	2	1	1	Play;OT	positive	OT
+14	2	1	0	OT	negative	Speech
+13	3	0	1		positive	ABA
+3	1	1	0	Play;Speech	positive	Play
+11	3	1	0	Speech	positive	Speech
+11	2	1	0	Play	positive	Play
+10	3	0	0	Play;Speech	positive	Speech
+5	1	1	1	Speech	neutral	OT
+2	1	1	0	OT;Speech	positive	Speech
+7	3	0	1	OT;Play	positive	Play
+5	3	0	1		negative	OT
+14	1	1	0	Play	positive	Play
+9	2	0	1		positive	ABA
+2	1	1	1		positive	ABA
+13	3	1	1	Speech	negative	OT
+3	3	0	0		positive	ABA
+13	1	1	1		negative	Speech
+6	1	1	0	ABA	positive	ABA
+3	3	1	1	OT	negative	Speech
+6	3	1	1	ABA	positive	ABA
+6	3	1	1	OT;ABA	negative	Speech
+11	1	1	1	Play	neutral	Speech
+12	2	1	1		positive	ABA
+8	1	1	0		neutral	Speech
+7	3	0	0		neutral	ABA
+12	1	1	0	ABA;Play	positive	ABA
+8	3	1	0	ABA	neutral	Speech
+9	1	1	0		positive	ABA
+6	1	1	1	ABA;OT	positive	OT
+13	1	1	1	OT;Speech	positive	Speech
+3	1	0	0	Speech;OT	positive	Speech
+7	1	0	0		neutral	ABA
+12	3	1	0		neutral	Speech
+5	1	0	0		negative	Speech
+11	2	1	1		neutral	Speech
+13	3	0	1		negative	OT
+10	1	1	0	OT;Speech	positive	Speech
+2	1	1	0		positive	ABA
+9	1	0	0		positive	ABA
+3	1	0	0	Speech	positive	Speech
+11	2	0	1		positive	ABA
+12	1	0	1	Speech;Play	neutral	OT
+4	2	0	0	Speech;Play	positive	Play
+11	2	1	1	Speech	positive	Speech
+8	3	0	0		positive	ABA
+3	2	0	1		positive	ABA
+13	1	1	0		negative	Speech
+8	2	1	1	Play	positive	Play
+4	1	0	1	OT;Play	neutral	Speech
+3	3	1	0		positive	ABA
+13	2	0	0	ABA;OT	positive	ABA
+14	3	1	0	Speech;OT	neutral	ABA
+5	2	0	0	ABA	neutral	Speech
+14	1	1	1	Speech;Play	positive	Play
+6	1	0	0		neutral	Play
+14	3	0	0	Play;OT	negative	ABA
+9	1	0	0	Speech	positive	Speech
+14	2	0	1	ABA	positive	ABA
+3	3	0	1		neutral	OT
+14	3	1	0		positive	ABA
+9	2	0	1		neutral	OT
+15	1	0	1	Play	neutral	OT
+11	2	0	0	ABA	neutral	ABA
+8	2	1	1	OT	positive	OT
+14	1	0	0	Play;OT	neutral	ABA
+2	2	0	0	ABA	positive	ABA
+12	2	1	1	Speech;OT	neutral	Play
+8	2	0	1	Speech;OT	neutral	None
+14	2	0	0		negative	Play
+5	2	1	1	Play;ABA	positive	ABA
+11	3	0	1	ABA	positive	ABA
+10	3	0	1	Play	positive	Play
+15	1	1	1	OT;ABA	positive	OT
+8	2	1	1	Speech	negative	OT
+8	1	1	1	ABA	neutral	Speech
+14	3	1	1	ABA;Speech	neutral	OT
+2	2	1	0	Play	neutral	Speech
+15	1	0	1	ABA;Play	neutral	OT
+6	1	0	1		positive	ABA
+13	1	1	0	ABA	positive	ABA
+14	3	0	0	ABA;OT	negative	None
+5	3	1	1	Play;OT	neutral	Speech
+9	3	1	0		negative	Speech
+15	3	0	0	Speech;ABA	positive	ABA
+10	3	0	1	Speech;Play	positive	Speech
+4	1	1	1	ABA	positive	ABA
+14	1	1	0	ABA	neutral	Speech
+7	1	1	1	Play;OT	positive	OT
+7	3	0	1	Play	neutral	OT
+8	2	0	0	ABA	positive	ABA
+8	3	1	0	OT;Speech	neutral	ABA
+6	3	0	1	Play	negative	OT
+8	2	1	0	ABA	positive	ABA
+11	2	0	1		positive	ABA
+13	1	0	0	OT	positive	OT
+5	1	0	1	OT	positive	OT
+13	2	0	1		positive	ABA
+3	3	1	0		negative	Speech
+8	2	0	1	Speech	negative	OT
+7	2	1	1	Play	neutral	Speech
+14	3	1	1		positive	ABA
+15	1	0	1	Play	negative	OT
+4	3	1	0	OT	positive	OT
+11	1	1	0		positive	ABA
+10	3	1	1	Play	neutral	Speech
+11	1	0	1	Play	neutral	OT
+12	3	1	1	OT	positive	OT
+13	2	1	0	OT	neutral	Speech
+13	1	0	1	Speech	neutral	OT
+8	2	0	0		positive	ABA
+11	1	0	0	Play;Speech	neutral	None
+9	1	1	1	Play;Speech	neutral	OT
+13	3	0	1	OT;ABA	positive	OT
+9	3	1	1		neutral	Speech
+6	2	0	0	Play;Speech	positive	Play
+15	2	1	0	OT	negative	Speech
+4	1	1	1		positive	ABA
+6	1	1	0	ABA	neutral	Speech
+8	3	1	1	Speech	negative	OT
+5	3	0	1	Speech	positive	Speech
+7	3	1	0	OT;Play	neutral	Speech
+11	2	0	1	Play	positive	Play
+14	2	0	1	Speech;ABA	positive	ABA
+2	3	0	1	Speech;Play	positive	Speech
+11	3	0	1		positive	ABA
+12	1	1	1	ABA;OT	neutral	Speech
+14	3	1	0	OT	negative	Speech
+12	3	1	1	OT;Play	positive	Play
+9	1	0	0		positive	ABA
+11	3	1	1	Play	negative	Speech
+12	2	1	1		positive	ABA
+12	3	0	0	ABA	positive	ABA
+5	1	0	0	Speech;OT	positive	OT
+14	2	1	1		neutral	Speech
+14	3	0	0		neutral	ABA
+3	3	1	0	Play;ABA	neutral	Speech
+11	3	0	1	OT;ABA	positive	ABA
+6	2	1	1	OT;Play	negative	Speech
+10	1	1	1		negative	Speech
+9	3	1	1	Speech	neutral	OT
+3	3	1	0	ABA	neutral	Speech
+12	1	0	1	Play	positive	Play
+5	3	0	1	Speech	positive	Speech
+10	3	1	1		positive	ABA
+6	2	0	1	ABA;OT	neutral	Speech
+6	1	1	0		positive	ABA
+10	2	0	1	Speech;Play	negative	OT
+4	2	0	1		positive	ABA
+15	1	1	1		neutral	Speech
+2	3	1	1	OT	positive	OT
+11	1	1	1	Play	positive	Play
+7	1	1	1		negative	Speech
+14	3	0	1		positive	ABA
+14	3	1	0	ABA;Speech	positive	ABA
+2	2	1	1	Play	positive	Play
+15	3	1	0	Speech;Play	positive	Speech
+11	1	0	1	OT	positive	OT
+11	1	1	1		negative	Speech
+3	3	0	0	Speech	positive	Speech
+2	1	0	0		neutral	Speech
+3	2	0	1		positive	ABA
+4	2	1	0		positive	ABA
+11	2	0	1	OT	positive	OT
+12	3	0	0		negative	ABA
+6	2	1	1	OT;Play	negative	Speech
+12	3	0	1	ABA;Play	positive	Play
+7	1	1	1		positive	ABA
+8	2	0	1	Speech	positive	Speech
+3	1	0	0	Speech	positive	Speech
+6	3	1	0		positive	ABA
+12	1	1	1		positive	ABA
+3	3	0	0	OT	neutral	ABA
+2	1	0	1	Speech	positive	Speech
+6	1	1	0	ABA	neutral	Speech
+5	2	1	0		neutral	Speech
+6	2	0	1	ABA;OT	neutral	ABA
+7	2	0	0		neutral	None
+2	3	1	0	ABA	positive	ABA
+10	1	1	0		neutral	Speech
+11	3	0	1	ABA	neutral	OT
+4	2	0	0		neutral	Speech
+9	2	1	1	ABA;Play	positive	Play
+13	1	0	0		positive	ABA
+12	1	1	1		neutral	Speech
+4	3	1	1	ABA;OT	positive	ABA
+3	2	1	1	Play	negative	Speech
+15	2	1	1		neutral	Speech
+11	3	0	0		neutral	ABA
+9	1	1	1	OT;Speech	positive	Speech
+14	1	1	1		neutral	Speech
+9	1	1	1	ABA;Play	neutral	Speech
+11	1	1	1	ABA;Speech	positive	Speech
+15	3	0	0	OT	positive	OT
+2	3	1	1	Play;Speech	negative	OT
+4	1	1	1		positive	ABA
+9	3	1	1		negative	Speech
+14	2	1	1	Play;ABA	positive	ABA
+9	3	1	1	OT	positive	OT
+3	3	1	0	ABA	positive	ABA
+14	3	1	1		positive	ABA
+15	2	1	0	ABA	positive	ABA
+5	2	0	1		neutral	OT
+3	3	1	1		positive	ABA
+5	3	0	1	Play;OT	positive	OT
+11	3	0	1		negative	OT
+7	1	0	0		positive	ABA
+14	2	1	0	OT;Speech	neutral	None
+15	1	1	0		positive	ABA
+5	2	1	1		positive	ABA
+12	2	1	0	Play;ABA	neutral	Speech
+4	1	0	1		neutral	OT
+15	2	0	0	Play;ABA	neutral	OT
+6	2	1	1	Speech	negative	OT
+8	3	0	0	Play	negative	ABA
+10	2	0	0	ABA	neutral	ABA
+15	1	1	1		neutral	Speech
+15	3	0	0		positive	ABA
+9	1	1	0	OT;ABA	positive	ABA
+3	1	1	0	Play	neutral	Speech
+3	2	1	1	Speech;OT	positive	OT
+5	1	1	1		negative	Speech
+4	2	1	0	OT;Speech	neutral	Speech
+7	1	0	0	ABA;Speech	positive	ABA
+3	2	0	1		neutral	OT
+14	1	0	1	ABA;Speech	neutral	OT
+15	1	1	1	ABA;Play	negative	Speech
+3	1	0	0		positive	ABA
+2	2	1	1		positive	ABA
+7	2	1	1	ABA;Speech	positive	Speech
+6	3	1	1		neutral	Speech
+9	2	1	1	Play;OT	positive	OT
+7	2	0	0	ABA	negative	None
+4	2	0	1		positive	ABA
+7	2	1	1		negative	Speech
+7	1	1	1		positive	ABA
+15	3	0	1	ABA;Play	neutral	OT
+4	3	1	0		positive	ABA
+8	2	1	0	Speech	positive	Speech
+12	1	0	1	ABA	neutral	OT
+7	2	1	1	Play	negative	Speech
+9	1	1	0	ABA;Speech	neutral	None
+9	3	0	1	OT;ABA	negative	Play
+9	3	0	0	Speech	positive	Speech
+11	1	1	0		positive	ABA
+4	3	1	1		negative	Speech
+7	1	0	1		positive	ABA
+3	1	0	1	ABA;Play	neutral	OT
+15	2	0	0	OT;Speech	positive	Speech
+10	2	1	0	ABA;Play	neutral	Speech
+10	3	0	0	Play	positive	Play
+14	1	0	0	ABA	neutral	Speech
+11	2	1	1		positive	ABA
+3	3	1	0		positive	ABA
+8	1	1	1	ABA	neutral	Speech
+7	1	0	0		positive	ABA
+3	2	0	1	OT;Speech	neutral	ABA
+13	1	0	1	Play	positive	Play
+14	1	1	1		positive	ABA
+13	2	1	0	OT	neutral	Speech
+12	2	1	1	Speech	positive	Speech
+10	1	1	1	Play	positive	Play
+15	3	1	0	OT;Play	neutral	Speech
+10	3	1	0		negative	Speech
+12	3	1	1		neutral	Speech
+10	1	1	0	Play	positive	Play
+6	2	0	1	Play	positive	Play
+7	1	1	0	OT;Speech	neutral	OT
+9	1	1	1	Play;OT	neutral	Speech
+12	3	0	1		positive	ABA
+8	2	1	1	Play	negative	Speech
+15	1	1	1	Play	neutral	Speech
+5	2	0	0	ABA	negative	ABA
+9	1	0	1	OT;Speech	neutral	Speech
+7	3	0	0	OT;ABA	neutral	None
+4	1	1	0		neutral	Speech
+7	2	0	0		negative	Play
+8	1	0	1	OT	positive	OT
+8	3	1	0		positive	ABA
+14	3	1	1		positive	ABA
+3	3	1	0	Speech;ABA	negative	Speech
+3	1	0	1		neutral	OT
+11	2	0	1		positive	ABA
+14	1	0	0	OT	neutral	None
+13	2	1	0	Speech	positive	Speech
+9	2	0	0	Play;ABA	positive	ABA
+15	2	0	0	Play;Speech	positive	Play
+4	1	1	1		neutral	Speech
+15	2	0	0	ABA	neutral	OT
+10	2	0	0		positive	ABA
+11	2	1	0	Play	neutral	Speech
+5	3	0	1	Play;Speech	neutral	OT
+6	2	0	0	Play	positive	Play
+12	1	0	0		positive	ABA
+3	3	1	1	ABA	positive	ABA
+12	1	1	0	ABA	positive	ABA
+14	1	1	0	ABA	negative	Speech
+8	3	0	0	Play;OT	negative	ABA
+9	1	1	1	Play	positive	Play
+12	3	0	1		neutral	OT
+6	3	0	0		positive	ABA
+10	1	1	1		negative	Speech
+9	2	0	1		positive	ABA
+15	1	1	1		negative	Speech
+14	1	0	0	Speech	negative	ABA
+9	3	0	0	Speech	positive	Speech
+12	2	0	1	OT	neutral	None
+11	2	1	0		neutral	Speech
+9	3	1	1		neutral	Speech
+5	2	1	0	ABA;OT	neutral	Speech
+7	2	0	0	ABA;Play	neutral	ABA
+14	2	1	1		positive	ABA
+2	1	0	0	Speech;Play	positive	Speech
+12	3	1	0	ABA;Play	positive	ABA
+7	2	0	0		positive	ABA
+14	2	0	0	OT	positive	OT
+8	2	0	0	OT;Play	neutral	OT
+4	2	1	0	ABA	neutral	Speech
+5	2	0	1	OT;Speech	positive	Speech
+13	2	1	0	Speech	neutral	OT
+4	2	1	0	OT;Play	negative	Speech
+5	3	0	0	Play	neutral	ABA
+2	2	0	0	Play	positive	Play
+6	3	0	1		neutral	OT
+8	1	0	0		positive	ABA
+4	3	0	1		neutral	OT
+3	2	1	1	ABA	positive	ABA
+15	2	0	1	Speech;Play	positive	Play
+3	2	0	1	ABA;Play	negative	OT
+2	2	0	1	OT	negative	Speech
+14	1	1	0		neutral	Speech
+11	3	0	1	OT	positive	OT
+5	1	1	0	ABA	positive	ABA
+7	1	0	0	OT;ABA	positive	OT
+6	1	0	0	Play;OT	negative	Speech
+6	2	0	1		positive	ABA
+2	2	0	1	ABA	neutral	OT
+13	3	1	1		negative	Speech
+12	1	1	1	Play	positive	Play
+2	2	0	1	Play	neutral	OT
+15	3	1	1	ABA;Speech	positive	ABA
+6	2	1	1	Play;Speech	negative	OT
+3	1	0	0	Speech;OT	negative	ABA
+2	3	0	0		neutral	ABA
+6	1	1	1		positive	ABA
+15	3	0	1		neutral	OT
+12	2	0	1	Speech;Play	positive	Speech
+3	2	1	0	Speech	positive	Speech
+9	3	0	0		neutral	ABA
+2	3	0	0	OT;Play	positive	OT
+8	1	0	1	Play;OT	negative	Speech
+12	3	1	1	Speech;ABA	positive	Speech
+6	1	1	0	Play;ABA	neutral	Speech
+2	3	0	0		positive	ABA
+6	3	1	0		neutral	Speech
+11	2	0	0	ABA	positive	ABA
+5	2	1	0	Play;Speech	negative	ABA
+3	2	1	0	OT	negative	Speech
+2	1	1	1	Play	neutral	Speech
+14	3	1	0	Play	positive	Play
+3	1	0	1	OT;ABA	negative	ABA
+15	2	0	1		negative	OT
+13	3	1	1	OT;Speech	negative	ABA
+10	2	1	1		neutral	Speech
+10	1	0	1		negative	OT
+8	1	0	0	OT	neutral	Play
+8	3	0	0		negative	ABA
+9	3	1	1	OT	positive	OT
+9	1	1	0	ABA;Play	positive	ABA
+13	2	1	1		positive	ABA
+4	3	0	1		positive	ABA
+14	2	1	0	OT	positive	OT
+15	2	0	1	Play	positive	Play
+5	3	1	1	Play	neutral	Speech
+3	3	0	0	Speech;OT	positive	Speech
+3	2	1	0		positive	ABA
+7	3	0	1	OT	negative	ABA
+9	3	1	0	Speech;OT	neutral	ABA
+10	1	1	1	Play;ABA	positive	Play
+15	3	0	1	ABA;OT	positive	OT
+6	1	0	0	Speech;Play	neutral	ABA
+2	2	1	1	ABA;Speech	positive	ABA
+14	3	1	0		neutral	Speech
+8	3	0	1	ABA;Speech	positive	Speech
+11	2	0	0	OT	positive	OT
+14	1	0	0	ABA	neutral	Play
+6	2	0	1	Speech	positive	Speech
+3	1	1	1	Play	neutral	Speech
+15	3	0	1	Play;OT	negative	ABA
+12	1	0	1		neutral	OT
+7	3	0	0	Play	negative	ABA
+14	2	0	0		neutral	OT
+3	1	1	0	Play	positive	Play
+12	2	0	1	Speech;OT	positive	Speech
+15	1	1	0	Speech;ABA	neutral	ABA
+14	1	1	0		positive	ABA
+12	2	1	1	ABA	negative	Speech
+6	3	1	1	Play	positive	Play
+13	1	0	1		positive	ABA
+14	3	0	0	OT;Speech	neutral	ABA
+9	1	1	1	Play	negative	Speech
+8	3	0	1		positive	ABA
+8	2	1	1		positive	ABA
+13	1	1	1		negative	Speech
+15	2	1	0		positive	ABA
+12	2	1	1		negative	Speech
+12	1	0	0		positive	ABA
+11	3	0	1		neutral	OT
+10	1	0	0		positive	ABA
+6	1	1	0	ABA	negative	Speech
+5	3	0	0		neutral	ABA
+5	2	1	1	ABA	neutral	Speech
+10	3	0	1	Play;OT	positive	OT
+9	2	0	1	Play;ABA	positive	ABA
+14	1	0	1	Play	positive	Play
+3	2	0	1		neutral	OT
+3	3	0	0		positive	ABA
+6	2	1	1	OT	positive	OT
+13	3	1	0		positive	ABA
+4	3	0	0		neutral	ABA
+5	1	0	0	ABA	negative	ABA
+5	2	1	1	ABA	neutral	Speech
+9	2	1	0	Speech	positive	Speech
+9	2	1	0	ABA;OT	negative	Speech
+15	1	0	0	Speech	positive	Speech
+11	3	1	1	Speech;OT	negative	ABA
+6	3	0	1	OT;Play	positive	OT
+2	3	0	1	OT;Play	positive	OT
+15	1	1	0		positive	ABA
+14	3	0	1		positive	ABA
+12	1	1	1	Play	positive	Play
+12	2	1	1	Speech;OT	positive	OT
+15	2	0	0	OT;Speech	positive	OT
+2	1	1	1	Speech;OT	neutral	ABA
+2	2	0	1	Speech	positive	Speech
+8	3	0	1	OT;Speech	neutral	ABA
+13	1	0	0		positive	ABA
+8	3	1	1	OT	negative	Speech
+3	1	1	0	ABA	positive	ABA
+5	3	0	0	Play;Speech	negative	ABA
+15	1	0	1	ABA;OT	positive	OT
+6	1	0	0	ABA	positive	ABA
+3	2	1	1	ABA	neutral	Speech
+10	3	1	1	OT;ABA	negative	Speech
+8	2	1	1	Play	negative	Speech
+10	3	1	0		positive	ABA
+7	3	0	1	ABA	neutral	OT
+2	3	1	0	Speech;OT	positive	Speech
+3	2	1	1	Speech	negative	OT
+3	2	0	1		negative	OT
+11	3	0	0		neutral	ABA
+10	1	1	1	ABA	negative	Speech
+2	1	0	1	Speech;Play	positive	Play
+15	1	1	0	OT	positive	OT
+12	2	1	1	ABA	neutral	Speech
+6	3	1	0	Play;ABA	neutral	Speech
+3	2	1	0	Speech;OT	neutral	Speech
+6	1	1	1		positive	ABA
+2	3	1	0	Play	neutral	Speech
+13	3	1	0		negative	Speech
+10	1	0	1		negative	OT
+14	2	0	0	OT;Speech	positive	Speech
+3	1	0	0	OT	positive	OT
+11	1	1	0	Play;Speech	positive	Speech
+4	3	1	0	Play;ABA	neutral	Speech
+14	2	0	0	OT	positive	OT
+4	2	1	1		neutral	Speech
+13	3	1	0		positive	ABA
+14	2	1	1		positive	ABA
+15	3	0	0		neutral	ABA
+8	2	1	0	OT	neutral	Speech
+9	1	0	1	Play	neutral	OT
+13	1	0	1		positive	ABA
+13	3	0	0	Speech	negative	ABA
+4	1	0	0	Play;Speech	negative	ABA
+10	1	0	1		negative	OT
+9	3	0	1	OT;ABA	negative	Play
+11	1	0	1		negative	OT
+14	1	0	1	ABA	positive	ABA
+5	3	1	1		neutral	Speech
+11	2	1	1	ABA;OT	positive	OT
+5	3	1	0	Speech;ABA	positive	Speech
+7	2	0	1	Speech;ABA	neutral	OT
+15	3	0	0	ABA	neutral	OT
+9	1	0	1	OT;ABA	neutral	Speech
+9	2	0	0	Play;Speech	negative	ABA
+8	2	1	0	OT;ABA	negative	Speech
+15	3	0	0		neutral	ABA
+12	3	0	1	Speech	neutral	OT
+10	2	0	1	OT;Play	positive	OT
+5	2	1	0		positive	ABA
+2	3	1	1		negative	Speech
+5	1	0	1	ABA;OT	positive	ABA
+7	1	1	1	Play;OT	positive	Play
+4	3	0	0	Play	neutral	ABA
+12	1	1	1		neutral	Speech
+2	2	0	0	ABA	negative	ABA
+10	2	1	1		positive	ABA
+8	2	1	1		neutral	Speech
+15	1	0	0	ABA	negative	Speech
+15	1	0	0	Play;OT	neutral	Speech
+5	3	1	0		neutral	Speech
+6	3	1	1	Speech	neutral	OT
+4	1	0	1	Speech;ABA	neutral	OT
+3	1	1	1	OT	positive	OT
+2	3	1	1		positive	ABA
+8	1	1	0	Play	positive	Play
+5	1	1	0		neutral	Speech
+8	3	1	1		neutral	Speech
+2	2	1	1	Speech;ABA	negative	OT
+6	3	0	0	OT	positive	OT
+3	3	0	1		positive	ABA
+4	1	0	0	Play;ABA	neutral	Speech
+7	2	1	0		positive	ABA
+15	3	0	0		negative	ABA
+5	1	0	0	Speech;OT	neutral	Speech
+8	3	0	1		positive	ABA
+4	3	0	1	ABA;Play	negative	OT
+6	3	0	0	ABA	positive	ABA
+14	2	0	0	Speech;ABA	negative	OT
+12	2	0	0		negative	Play
+13	2	0	0		positive	ABA
+2	1	1	1	ABA;Speech	neutral	OT
+14	3	0	0		neutral	ABA
+14	1	1	1		negative	Speech
+13	1	0	0		positive	ABA
+10	3	1	0	Play	neutral	Speech
+8	3	1	1	ABA;Play	positive	Play
+7	2	0	1	Play	positive	Play
+5	2	1	1	OT	neutral	Speech
+8	3	0	1		neutral	OT
+4	1	1	0	Play;OT	neutral	Speech
+11	2	1	1	ABA	neutral	Speech
+2	2	0	1	Play	positive	Play
+11	1	1	1		neutral	Speech
+14	1	1	1	Play	negative	Speech
+11	2	1	0	ABA	positive	ABA
+2	3	1	0	ABA	positive	ABA
+14	1	0	0	Speech;ABA	positive	Speech
+9	2	0	0	Play;Speech	positive	Play
+15	2	1	1	OT;Speech	positive	OT
+3	2	0	0		neutral	ABA
+11	2	0	1	OT;ABA	positive	OT
+8	2	0	0	Speech	positive	Speech
+12	1	1	1		neutral	Speech
+14	2	0	0	Speech	positive	Speech
+12	2	0	0		positive	ABA
+2	1	1	1	ABA;Speech	negative	OT
+14	3	1	0	OT	positive	OT
+8	2	1	1		neutral	Speech
+3	2	1	0	Play	negative	Speech
+3	1	0	1	OT;ABA	neutral	Speech
+7	1	1	1	OT	positive	OT
+12	2	0	0	OT	positive	OT
+15	2	1	0	Speech;OT	positive	OT
+9	1	0	0	ABA;OT	positive	ABA
+15	1	1	0	Play;ABA	positive	ABA
+6	3	0	1		positive	ABA
+7	3	1	1	Play;Speech	negative	OT
+4	1	1	0		positive	ABA
+9	3	1	1	ABA;OT	neutral	Speech
+10	3	0	1	ABA;Speech	positive	ABA
+10	1	1	1		negative	Speech
+14	1	0	0	Play	positive	Play
+10	2	1	1	ABA	negative	Speech
+11	1	1	1	OT;ABA	positive	ABA
+12	1	1	0		neutral	Speech
+14	2	0	1	ABA	neutral	OT
+15	3	1	0	OT;Speech	positive	OT
+6	3	1	0	OT;ABA	negative	Speech
+13	3	0	0	Speech;Play	positive	Play
+8	2	1	1	ABA;Speech	neutral	OT
+5	2	0	0		negative	ABA
+9	1	0	1	Speech;OT	negative	Play
+7	3	1	1	OT	positive	OT
+4	1	0	1	Play;ABA	neutral	OT
+2	1	1	0		negative	Speech
+13	3	1	0	ABA;Play	negative	Speech
+14	1	1	0	OT;ABA	positive	ABA
+15	1	0	0	Play	positive	Play
+2	2	0	1	Play	negative	OT
+3	1	1	1	ABA	positive	ABA
+3	1	0	1	Play;Speech	neutral	OT
+7	1	1	0	OT	positive	OT
+9	3	0	1		negative	OT
+14	1	1	1	ABA	negative	Speech
+11	2	1	1		neutral	Speech
+3	1	1	1	Play	positive	Play
+7	3	1	1	OT;ABA	positive	ABA
+13	1	0	1	ABA;Play	positive	Play
+13	1	0	1		positive	ABA
+11	3	1	0	Play	positive	Play
+14	3	0	1		neutral	OT
+12	1	1	0		positive	ABA
+12	3	1	1	Play;OT	neutral	Speech
+4	1	1	1		positive	ABA
+12	1	0	0	Play	positive	Play
+11	3	1	0	Play	positive	Play
+11	1	0	1	Play	positive	Play
+11	1	1	0	ABA;OT	neutral	Speech
+3	3	1	0	ABA;Speech	neutral	ABA
+15	2	0	0	Play	positive	Play
+6	1	1	1	Play;Speech	positive	Play
+15	1	1	1	OT;Play	positive	Play
+11	2	0	1		positive	ABA
+3	3	0	1	OT;ABA	positive	OT
+15	2	0	1	OT;ABA	positive	ABA
+8	3	1	1		negative	Speech
+6	3	0	1	ABA	neutral	OT
+6	2	1	1	Play	negative	Speech
+8	3	0	1	Play;ABA	positive	Play
+8	2	0	0	Play	positive	Play
+9	2	0	0	ABA	neutral	Speech
+5	3	0	0	Speech;OT	positive	Speech
+11	2	0	1		positive	ABA
+2	2	0	0	ABA	negative	ABA
+13	3	0	1	OT	negative	ABA
+6	2	1	0	Speech;ABA	positive	Speech
+12	2	0	1	Play;OT	neutral	OT
+13	1	1	0	ABA;OT	negative	Speech
+3	3	1	1	ABA	positive	ABA
+14	1	0	1		positive	ABA
+2	1	1	0		neutral	Speech
+13	1	0	1	OT	positive	OT
+5	3	0	1	Speech	positive	Speech
+11	3	1	1	Play;Speech	negative	OT
+8	2	1	0	OT	neutral	Speech
+14	2	0	0	ABA;Play	negative	Speech
+4	1	1	0	OT	positive	OT
+4	1	0	1	OT;Play	negative	ABA
+13	2	0	1	OT;Play	neutral	ABA
+6	2	1	1	Play;ABA	positive	ABA
+13	1	1	1	ABA;Play	negative	Speech
+13	3	1	0	OT	positive	OT
+7	2	0	0	OT;Speech	negative	ABA
+8	1	0	1		positive	ABA
+11	3	0	1		positive	ABA
+10	3	1	1	Speech	positive	Speech
+2	2	1	0		positive	ABA
+13	1	0	0	Play;ABA	positive	ABA
+2	3	0	1		negative	OT
+8	2	1	0	OT	positive	OT
+7	2	1	1	Play	neutral	Speech
+9	2	1	1	Play;OT	positive	OT
+9	3	0	0		positive	ABA
+8	2	1	1	ABA;Play	positive	Play
+7	1	0	1	ABA	positive	ABA
+2	1	1	1		positive	ABA
+3	2	0	1		positive	ABA
+13	3	0	1	Play	neutral	OT
+14	2	0	1	ABA	positive	ABA
+2	1	1	0	ABA;Speech	negative	Speech
+14	3	1	0	OT	positive	OT
+11	2	1	0	Play;ABA	neutral	Speech
+10	1	0	0		positive	ABA
+9	3	1	0	Speech;ABA	positive	Speech
+3	2	0	1	Speech;ABA	neutral	OT
+12	1	0	1	OT;ABA	neutral	Speech
+8	3	1	1		positive	ABA
+13	3	1	0	OT;Play	neutral	Speech
+13	1	0	1		neutral	OT
+5	2	0	1	Speech	neutral	OT
+11	3	0	1	Play;OT	negative	ABA
+2	3	0	0	Speech	neutral	ABA
+7	3	1	0		neutral	Speech
+13	1	1	0	ABA	positive	ABA
+9	1	1	1	ABA	positive	ABA
+9	2	0	0		positive	ABA
+2	2	0	0	OT;ABA	positive	OT
+2	2	1	0	ABA;Speech	negative	Speech
+13	2	0	0	OT;Speech	neutral	OT
+10	2	1	1	ABA;OT	positive	ABA
+3	2	1	1		positive	ABA
+12	3	1	0	Speech;ABA	positive	Speech
+7	1	0	1	OT	negative	Speech
+10	1	0	0		neutral	None
+13	1	0	1	OT	negative	ABA
+10	2	0	1	ABA;OT	neutral	ABA
+2	2	0	0	Play;ABA	positive	ABA
+4	2	0	0	Play;ABA	positive	Play
+11	2	1	0		neutral	Speech
+10	2	0	1	Speech	positive	Speech
+14	3	0	1	OT	neutral	ABA
+9	1	0	1	Speech	positive	Speech
+12	2	1	0	Speech;ABA	positive	ABA
+5	2	0	1	ABA	positive	ABA
+8	3	0	1	Speech;ABA	neutral	OT
+12	2	0	1	ABA;Speech	negative	OT
+9	3	1	0	OT	negative	Speech
+9	3	1	0	Play;Speech	neutral	ABA
+6	2	0	1	Play;OT	positive	OT
+6	3	0	1	Speech	positive	Speech
+6	1	1	0	ABA	positive	ABA
+6	3	0	0		positive	ABA
+12	2	0	0	Play	neutral	Play
+3	3	1	1	ABA;OT	negative	Speech
+5	2	1	1	Speech	negative	OT
+8	2	1	1	OT;Play	positive	Play
+14	1	1	0	ABA	positive	ABA
+12	2	0	0		positive	ABA
+15	1	1	0	OT	neutral	Speech
+13	1	0	1		positive	ABA
+3	1	1	1	Speech;OT	positive	OT
+5	1	0	1	ABA	positive	ABA

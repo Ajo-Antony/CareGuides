@@ -1,63 +1,8 @@
 <?php
 session_start();
-require_once 'config/database.php';
-
-// Check if test result exists
-if (!isset($_SESSION['test_result'])) {
-    header("Location: test.php");
-    exit();
-}
-
-$testResult = $_SESSION['test_result'];
-$childName = $_SESSION['child_name'] ?? 'Unknown';
-$childAge = $_SESSION['child_age'] ?? 0;
-$answers = $_SESSION['answers'] ?? array_fill(0, 10, 0);
-
-// Question labels
-$questionLabels = [
-    1 => "Does the child look at you when you call his/her name?",
-    2 => "Does the child point at objects to show interest?",
-    3 => "Does the child pretend play (e.g., pretend to drink from an empty cup)?",
-    4 => "Does the child use single words meaningfully?",
-    5 => "Does the child respond to their name?",
-    6 => "Does the child make eye contact when interacting?",
-    7 => "Does the child show interest in other children?",
-    8 => "Does the child bring objects to show parents?",
-    9 => "Does the child follow simple instructions?",
-    10 => "Does the child engage in back-and-forth social interaction?"
-];
-
-// Get test ID for therapy resources link
-$testId = $_SESSION['test_id'] ?? 0;
-
-// If no test ID in session, try to get the latest autism screening test ID for the user
-if ($testId === 0 && isset($_SESSION['user_id'])) {
-    $stmt = $conn->prepare("
-        SELECT id, child_name, test_date 
-        FROM test_results 
-        WHERE user_id = ? 
-        AND (test_type IS NULL OR test_type = '' OR test_type = 'autism' OR test_type = 'screening')
-        ORDER BY test_date DESC 
-        LIMIT 1
-    ");
-    $stmt->bind_param("i", $_SESSION['user_id']);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($row = $result->fetch_assoc()) {
-        $testId = $row['id'];
-        // Also update child name if not set
-        if (empty($childName) || $childName === 'Unknown') {
-            $childName = $row['child_name'] ?? $childName;
-            $_SESSION['child_name'] = $childName;
-        }
-        // Store test date for reference
-        $_SESSION['test_date'] = $row['test_date'];
-    }
-    $stmt->close();
-}
-
-// Store the test ID back in session for future use
-$_SESSION['last_test_id'] = $testId;
+// Get child information from session if available
+$childName = $_SESSION['child_name'] ?? '';
+$childAge = $_SESSION['child_age'] ?? '';
 ?>
 
 <!DOCTYPE html>
@@ -65,123 +10,536 @@ $_SESSION['last_test_id'] = $testId;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Results - CareGuides</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <title>Therapy Details Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background: #f4f7fa; padding: 20px; }
-        .card { border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border: none; }
-        .list-group-item { background-color: #fff; border: none; border-bottom: 1px solid #f0f0f0; padding: 15px 20px; }
-        .result-card { background-color: #fff; border-left: 5px solid; padding: 20px; margin-top: 25px; border-radius: 8px; box-shadow: 0 3px 6px rgba(0,0,0,0.05); }
-        .result-positive { border-left-color: #dc3545; background: linear-gradient(to right, rgba(220, 53, 69, 0.05), white); }
-        .result-negative { border-left-color: #28a745; background: linear-gradient(to right, rgba(40, 167, 69, 0.05), white); }
-        .confidence-meter { height: 10px; background: #e9ecef; border-radius: 5px; margin: 15px 0; overflow: hidden; }
-        .confidence-fill { height: 100%; border-radius: 5px; }
-        .btn-group-custom { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
-        .therapy-btn { background: linear-gradient(45deg, #ff6b6b, #ff8e53); border: none; color: white; }
-        .therapy-btn:hover { background: linear-gradient(45deg, #ff5252, #ff7b39); color: white; transform: translateY(-2px); }
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --light-bg: #f0f9ff;
+            --card-bg: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border: #cbd5e1;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .form-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .typing-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            padding: 20px 25px;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .typing-box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--primary);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            animation: blink 1s infinite;
+            font-weight: bold;
+        }
+
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0; }
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .label-with-icon {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .info {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        input, select, .select2-container {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: #f8fafc;
+        }
+
+        input:focus, select:focus, .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border-color: var(--primary);
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .select2-container--default .select2-selection--multiple {
+            border: 2px solid var(--border);
+            min-height: 48px;
+            border-radius: 12px;
+            background: #f8fafc;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+            color: white;
+            margin-right: 5px;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+            color: #fef3c7;
+        }
+
+        .multi-choice-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .multi-choice-option {
+            background: #f1f5f9;
+            padding: 14px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+        }
+
+        .multi-choice-option:hover {
+            background: #e0f2fe;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .multi-choice-option input[type="checkbox"] {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+        }
+
+        .multi-choice-option.selected {
+            background: #dbeafe;
+            border-color: var(--primary);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            transform: translateY(-3px);
+        }
+
+        .progress-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 30px;
+        }
+
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            transition: all 0.3s;
+        }
+
+        .progress-dot.active {
+            background: var(--primary);
+            width: 24px;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .form-card {
+                padding: 25px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .multi-choice-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container mt-4 mb-5">
-        <div class="card p-4">
-            <div class="card-body">
-                <h2 class="text-center mb-4 text-primary"><i class="bi bi-clipboard-check"></i> Autism Screening Results</h2>
-                
-                <h5 class="mb-4">Child's Name: <span class="text-info"><?php echo htmlspecialchars($childName); ?></span></h5>
-                <h6 class="mb-4">Child's Age: <span class="text-info"><?php echo htmlspecialchars($childAge); ?> years</span></h6>
-                
-                <ul class="list-group mb-4">
-                    <?php for ($i = 1; $i <= 10; $i++): 
-                        $answer = $answers[$i-1] == 0 ? 'Yes' : 'No';
-                        $textClass = $answers[$i-1] == 0 ? 'success' : 'danger';
-                    ?>
-                    <li class="list-group-item">
-                        <strong>Q<?php echo $i; ?>:</strong> <?php echo $questionLabels[$i]; ?>
-                        <span class="float-right text-<?php echo $textClass; ?>"><strong><?php echo $answer; ?></strong></span>
-                    </li>
-                    <?php endfor; ?>
-                </ul>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-heartbeat"></i> Therapy Prediction System</h1>
+            <p>Fill in the details below to get personalized therapy recommendations based on your child's needs</p>
+        </div>
 
-                <?php
-                $prediction = $testResult['prediction'] ?? $testResult;
-                $confidence = $testResult['confidence'] ?? 85;
-                $isFallback = $testResult['is_fallback'] ?? false;
-                
-                if ($prediction == 1 || $prediction === '1') {
-                    echo '<div class="result-card result-positive">';
-                    echo '<h5 class="text-danger"><i class="bi bi-exclamation-triangle-fill"></i> Possible signs of autism detected</h5>';
-                    echo '<p>Based on our ML analysis, there are indications that may warrant further evaluation by a specialist.</p>';
-                    
-                    if ($isFallback) {
-                        echo '<div class="alert alert-warning"><i class="bi bi-exclamation-triangle"></i> Using fallback calculation (ML API unavailable)</div>';
-                    }
-                    
-                    echo '<div class="confidence-meter"><div class="confidence-fill bg-danger" style="width: ' . $confidence . '%"></div></div>';
-                    echo '<p class="text-muted">Confidence level: ' . $confidence . '%</p>';
-                    echo '</div>';
-
-                    echo '<div class="btn-group-custom mt-4">';
-                    echo '<a href="book_appointment.php" class="btn btn-danger"><i class="bi bi-calendar-check"></i> Book Specialist Appointment</a>';
-                    
-                    // Fixed Therapy Resources button with test ID
-                    if ($testId > 0) {
-                        echo '<a href="test-details.php?id=' . $testId . '" class="btn therapy-btn"><i class="bi bi-heart-pulse"></i> Get Therapy Recommendations</a>';
-                    } else {
-                        // Pass child info via URL parameters
-                        $testDate = $_SESSION['test_date'] ?? date('Y-m-d');
-                        echo '<a href="test-details.php?date=' . urlencode($testDate) . '&child=' . urlencode($childName) . '" class="btn therapy-btn"><i class="bi bi-heart-pulse"></i> Get Therapy Recommendations</a>';
-                    }
-                    
-                    echo '</div>';
-                } else {
-                    echo '<div class="result-card result-negative">';
-                    echo '<h5 class="text-success"><i class="bi bi-check-circle-fill"></i> Unlikely signs of autism</h5>';
-                    echo '<p>Based on our ML analysis, your child is unlikely to show signs of autism. Continue monitoring development.</p>';
-                    
-                    if ($isFallback) {
-                        echo '<div class="alert alert-warning"><i class="bi bi-exclamation-triangle"></i> Using fallback calculation (ML API unavailable)</div>';
-                    }
-                    
-                    echo '<div class="confidence-meter"><div class="confidence-fill bg-success" style="width: ' . $confidence . '%"></div></div>';
-                    echo '<p class="text-muted">Confidence level: ' . $confidence . '%</p>';
-                    echo '</div>';
-                }
-                ?>
-
-                <div class="alert alert-info mt-4">
-                    <h6><i class="bi bi-info-circle"></i> Important Note</h6>
-                    <p class="mb-0">This screening uses machine learning analysis but is not a diagnostic tool. Results should be discussed with a qualified healthcare professional.</p>
-                </div>
-
-                <div class="btn-group-custom">
-                    <a href="test.php" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Back to Test</a>
-                    <a href="dashboard.php" class="btn btn-primary"><i class="bi bi-speedometer2"></i> Dashboard</a>
-                    <button onclick="window.print()" class="btn btn-success"><i class="bi bi-printer"></i> Print Results</button>
-                </div>
+        <div class="form-card">
+            <div class="typing-box" id="typingText">
+                <i class="fas fa-comment-medical" style="margin-right: 10px; color: var(--primary);"></i>
+                <span id="typingContent"></span><span class="typing-cursor">|</span>
             </div>
+
+            <form action="test.php" method="post">
+                <!-- Child's Name Field -->
+                <div class="form-group">
+                    <label for="child_name" class="label-with-icon">
+                        <i class="fas fa-user"></i> Child's Name
+                    </label>
+                    <div class="info">Name of the child for therapy recommendation</div>
+                    <input type="text" id="child_name" name="child_name" 
+                           value="<?php echo htmlspecialchars($childName); ?>" 
+                           placeholder="Enter child's name">
+                </div>
+
+                <div class="form-group">
+                    <label for="age" class="label-with-icon">
+                        <i class="fas fa-birthday-cake"></i> Age
+                    </label>
+                    <div class="info">Child's age (between 2 and 15 years)</div>
+                    <input type="number" id="age" name="Age" min="2" max="15" 
+                           value="<?php echo htmlspecialchars($childAge); ?>" 
+                           required placeholder="Enter age">
+                </div>
+
+                <div class="form-group">
+                    <label for="asd" class="label-with-icon">
+                        <i class="fas fa-brain"></i> ASD Level
+                    </label>
+                    <div class="info">The diagnosed severity of Autism Spectrum Disorder</div>
+                    <select id="asd" name="ASD_Level" required>
+                        <option value="">-- Select Severity Level --</option>
+                        <option value="1">Mild (Level 1)</option>
+                        <option value="2">Moderate (Level 2)</option>
+                        <option value="3">Severe (Level 3)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="speech" class="label-with-icon">
+                        <i class="fas fa-comments"></i> Speech Delay
+                    </label>
+                    <div class="info">Does the child show delayed speech development?</div>
+                    <select id="speech" name="Speech_Delay" required>
+                        <option value="">-- Select Option --</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="motor" class="label-with-icon">
+                        <i class="fas fa-walking"></i> Motor Delay
+                    </label>
+                    <div class="info">Is there a delay in motor skills such as walking or coordination?</div>
+                    <select id="motor" name="Motor_Delay" required>
+                        <option value="">-- Select Option --</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="feedback" class="label-with-icon">
+                        <i class="fas fa-star"></i> Feedback
+                    </label>
+                    <div class="info">General caregiver or therapist feedback on progress</div>
+                    <select id="feedback" name="Feedback" required>
+                        <option value="">-- Select Feedback --</option>
+                        <option value="positive">Positive</option>
+                        <option value="neutral">Neutral</option>
+                        <option value="negative">Negative</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="past" class="label-with-icon">
+                        <i class="fas fa-history"></i> Past Therapies
+                    </label>
+                    <div class="info">Therapies previously tried. You can select multiple options</div>
+                    <select id="past" name="Past_Therapies[]" multiple="multiple">
+                        <option value="ABA">ABA (Applied Behavior Analysis)</option>
+                        <option value="OT">OT (Occupational Therapy)</option>
+                        <option value="Play">Play Therapy</option>
+                        <option value="Speech">Speech Therapy</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="label-with-icon">
+                        <i class="fas fa-tasks"></i> Additional Challenges (Optional)
+                    </label>
+                    <div class="info">Select one or more challenges the child faces</div>
+                    <div class="multi-choice-group">
+                        <label class="multi-choice-option">
+                            <input type="checkbox" name="Challenges[]" value="Social Difficulty"> Social Difficulty
+                        </label>
+                        <label class="multi-choice-option">
+                            <input type="checkbox" name="Challenges[]" value="Sensory Issues"> Sensory Issues
+                        </label>
+                        <label class="multi-choice-option">
+                            <input type="checkbox" name="Challenges[]" value="Learning Delay"> Learning Delay
+                        </label>
+                        <label class="multi-choice-option">
+                            <input type="checkbox" name="Challenges[]" value="Hyperactivity"> Hyperactivity
+                        </label>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <a href="..\dashboard.php" class="btn btn-secondary">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-magic"></i> Predict Effective Therapy
+                    </button>
+                </div>
+
+                <div class="progress-indicator">
+                    <div class="progress-dot active"></div>
+                    <div class="progress-dot"></div>
+                    <div class="progress-dot"></div>
+                    <div class="progress-dot"></div>
+                </div>
+            </form>
         </div>
     </div>
-    
+
+    <!-- jQuery and Select2 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const confidenceFill = document.querySelector('.confidence-fill');
-            if (confidenceFill) {
-                const width = confidenceFill.style.width;
-                confidenceFill.style.width = '0';
-                setTimeout(() => {
-                    confidenceFill.style.width = width;
-                    confidenceFill.style.transition = 'width 1s ease';
-                }, 500);
-            }
+        $(document).ready(function () {
+            // Initialize Select2
+            $('#past').select2({
+                placeholder: "Select past therapies",
+                allowClear: true,
+                width: '100%'
+            });
+
+            // Typing animation
+            const typingContent = document.getElementById("typingContent");
+            const messages = [
+                "Welcome! Please provide details below to get personalized therapy recommendations.",
+                "Our AI will analyze the information to suggest the most effective therapy approach.",
+                "Please fill all required fields for accurate prediction.",
+                "Your data is secure and will be used only for therapeutic recommendations."
+            ];
             
-            // Add animation to therapy button
-            const therapyBtn = document.querySelector('.therapy-btn');
-            if (therapyBtn) {
-                therapyBtn.addEventListener('mouseenter', function() {
-                    this.style.transition = 'all 0.3s ease';
-                });
+            let messageIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let typingSpeed = 50;
+            let deleteSpeed = 30;
+            let pauseBetweenMessages = 2000;
+
+            function typeWriter() {
+                const currentMessage = messages[messageIndex];
+
+                if (!isDeleting && charIndex <= currentMessage.length) {
+                    typingContent.innerHTML = currentMessage.substring(0, charIndex);
+                    charIndex++;
+                    setTimeout(typeWriter, typingSpeed);
+                } else if (isDeleting && charIndex >= 0) {
+                    typingContent.innerHTML = currentMessage.substring(0, charIndex);
+                    charIndex--;
+                    setTimeout(typeWriter, deleteSpeed);
+                } else {
+                    isDeleting = !isDeleting;
+                    if (!isDeleting) {
+                        messageIndex = (messageIndex + 1) % messages.length;
+                    }
+                    setTimeout(typeWriter, isDeleting ? pauseBetweenMessages : 500);
+                }
             }
+
+            typeWriter();
+
+            // Multi-choice checkbox styling
+            $('.multi-choice-option').click(function() {
+                const checkbox = $(this).find('input[type="checkbox"]');
+                checkbox.prop('checked', !checkbox.prop('checked'));
+                $(this).toggleClass('selected', checkbox.prop('checked'));
+            });
+
+            // Form validation and progress indicator
+            $('form').on('input change', function() {
+                const filledFields = $(this).find('input[required], select[required]').filter(function() {
+                    return $(this).val() !== '';
+                }).length;
+                
+                const totalFields = $(this).find('input[required], select[required]').length;
+                const progress = Math.min(Math.round((filledFields / totalFields) * 4), 4);
+                
+                $('.progress-dot').removeClass('active');
+                $('.progress-dot').slice(0, progress).addClass('active');
+            });
         });
     </script>
 </body>

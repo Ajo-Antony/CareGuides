@@ -1,596 +1,596 @@
 <?php
 session_start();
-require_once 'config/database.php';
+// Fix the path to config/database.php
+require_once '../config/database.php'; // Changed from 'config/database.php'
 
-// Function to call Flask API
-function predictAutism($answers, $childName = '', $childAge = 0, $userId = null) {
-    // Build API URL
-    $baseUrl = "http://localhost:5001/check";
+if ($_SERVER["REQUEST_METHOD"] == "POST")  {
+    // Capture child's name from form
+    $childName = $_POST["child_name"] ?? 'Child from Therapy Form';
+    $childAge = $_POST["Age"] ?? 0;
     
-    // Add parameters
-    $params = [];
-    for ($i = 1; $i <= 10; $i++) {
-        $params["A$i"] = $answers[$i-1];
-    }
+    // Store child information in session
+    $_SESSION['child_name'] = $childName;
+    $_SESSION['child_age'] = $childAge;
     
-    if ($childName) {
-        $params['child_name'] = urlencode($childName);
-    }
-    
-    if ($childAge) {
-        $params['child_age'] = $childAge;
-    }
-    
-    if ($userId) {
-        $params['user_id'] = $userId;
-    }
-    
-    $url = $baseUrl . '?' . http_build_query($params);
-    
-    // Call API with timeout
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
+    // Your existing data collection
+    $data = array(
+        "Age" => $_POST["Age"],
+        "ASD_Level" => $_POST["ASD_Level"],
+        "Speech_Delay" => $_POST["Speech_Delay"],
+        "Motor_Delay" => $_POST["Motor_Delay"],
+        "Feedback" => $_POST["Feedback"],
+        "Past_Therapies" => isset($_POST["Past_Therapies"]) ? $_POST["Past_Therapies"] : [],
+        "Challenges" => isset($_POST["Challenges"]) ? $_POST["Challenges"] : []
+    );
+
+    $json_data = json_encode($data);
+
+    // Call ML API
+    $ch = curl_init("http://localhost:5002/predict");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-    
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-    
-    if ($httpCode == 200) {
-        $result = json_decode($response, true);
-        if (isset($result['success']) && $result['success']) {
-            // Save to database if user is logged in
-            if (isset($_SESSION['user_id']) && $userId) {
-                saveTestResult($result, $answers, $childName, $childAge, $userId);
-            }
-            return $result;
-        }
-    }
-    
-    // Fallback: Use local calculation if API fails
-    return calculateFallbackPrediction($answers, $childName, $childAge);
-}
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
 
-function saveTestResult($apiResult, $answers, $childName, $childAge, $userId) {
-    global $conn;
-    
-    try {
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    $result = json_decode($response, true);
+
+    // SAVE TO DATABASE
+    $therapyPrediction = null;
+    if (isset($result['prediction'])) {
+        $therapyPrediction = $result['prediction'];
+        
+        // Use the child name from the form
+        $childName = $childName ?: "Child from Therapy Form";
+        
+        // Convert Past_Therapies array to string
+        $pastTherapiesStr = !empty($data["Past_Therapies"]) ? implode(';', $data["Past_Therapies"]) : null;
+        
+        // Convert Challenges array to string
+        $challengesStr = !empty($data["Challenges"]) ? implode(';', $data["Challenges"]) : null;
+        
+        // Determine ASD status based on ASD_Level (you can adjust this logic)
+        $asdStatus = ($data["ASD_Level"] >= 2) ? 1 : 0;
+        
+        // Calculate confidence score (simple logic - adjust as needed)
+        $confidenceScore = 85; // Default or calculate based on your logic
+        
+        // Store the form data as JSON in test_data column
+        $testDataJson = json_encode($data);
+        
+        // Insert into database
         $stmt = $conn->prepare("
-            INSERT INTO test_results 
-            (user_id, child_name, child_age, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, 
-             prediction_result, confidence_score, test_date)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
+            INSERT INTO test_results (
+                user_id, child_name, child_age, asd_level, 
+                speech_delay, motor_delay, feedback, past_therapies,
+                therapy_prediction, test_type, test_data, confidence_score
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'therapy', ?, ?)
         ");
         
-        // FIXED: Bind parameters correctly - 15 parameters total
-        $prediction_label = $apiResult['prediction'] == 1 ? 'Positive' : 'Negative';
-        $confidence = $apiResult['confidence'] ?? 0;
-        
-        // Debug: Check what we're binding
-        error_log("Binding parameters: user_id=$userId, child_name=$childName, child_age=$childAge, answers=" . implode(',', $answers));
+        $userId = $_SESSION['user_id'] ?? 2; // Default to user_id 2 if not logged in
+        $childAge = $data["Age"];
+        $asdLevel = $data["ASD_Level"];
+        $speechDelay = $data["Speech_Delay"];
+        $motorDelay = $data["Motor_Delay"];
+        $feedback = $data["Feedback"];
         
         $stmt->bind_param(
-            "isiiiiiiiiiiiss", // 15 parameters: i=integer, s=string
-            $userId,                   // user_id (i)
-            $childName,                // child_name (s)
-            $childAge,                 // child_age (i)
-            $answers[0],               // a1 (i)
-            $answers[1],               // a2 (i)
-            $answers[2],               // a3 (i)
-            $answers[3],               // a4 (i)
-            $answers[4],               // a5 (i)
-            $answers[5],               // a6 (i)
-            $answers[6],               // a7 (i)
-            $answers[7],               // a8 (i)
-            $answers[8],               // a9 (i)
-            $answers[9],               // a10 (i)
-            $prediction_label,         // prediction_result (s)
-            $confidence                // confidence_score (s)
+            "isiiiiisssi",
+            $userId,
+            $childName,
+            $childAge,
+            $asdLevel,
+            $speechDelay,
+            $motorDelay,
+            $feedback,
+            $pastTherapiesStr,
+            $therapyPrediction,
+            $testDataJson,
+            $confidenceScore
         );
         
         if ($stmt->execute()) {
-            $testId = $conn->insert_id;
-            error_log("Test result saved successfully with ID: $testId");
-            $stmt->close();
-            return $testId;
+            $testId = $stmt->insert_id;
+            // Store test ID in session for later use
+            $_SESSION['last_test_id'] = $testId;
         } else {
-            error_log("Error executing statement: " . $stmt->error);
-            $stmt->close();
-            return false;
+            // Log error but continue
+            error_log("Database save failed: " . $stmt->error);
         }
-    } catch (Exception $e) {
-        error_log("Error saving test result: " . $e->getMessage());
-        return false;
+        
+        $stmt->close();
     }
-}
 
-function calculateFallbackPrediction($answers, $childName = '', $childAge = 0) {
-    // Simple rule-based fallback if API fails
-    $score = array_sum($answers);
-    $prediction = $score >= 5 ? 1 : 0;
-    
-    $confidence = ($score / 10) * 100;
-    
-    return [
-        'success' => true,
-        'prediction' => $prediction,
-        'prediction_label' => $prediction == 1 ? 'Positive' : 'Negative',
-        'confidence' => round($confidence, 2),
-        'probabilities' => [
-            'No' => round((10 - $score) / 10 * 100, 2),
-            'Yes' => round($score / 10 * 100, 2)
-        ],
-        'child_info' => [
-            'name' => $childName,
-            'age' => $childAge
-        ],
-        'is_fallback' => true,
-        'timestamp' => date('Y-m-d H:i:s')
-    ];
-}
+    // Convert values to readable format
+    function readable($key, $value) {
+        $map = [
+            "ASD_Level" => ["1" => "Mild", "2" => "Moderate", "3" => "Severe"],
+            "Speech_Delay" => ["1" => "Yes", "0" => "No"],
+            "Motor_Delay" => ["1" => "Yes", "0" => "No"],
+        ];
+        return isset($map[$key][$value]) ? $map[$key][$value] : $value;
+    }
 
-// Handle form submission
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $childName = sanitize($_POST['child_name'] ?? '');
-    $childAge = intval($_POST['child_age'] ?? 0);
-    
-    // Get answers - ensure we have exactly 10 answers
-    $answers = [];
-    for ($i = 1; $i <= 10; $i++) {
-        $answers[] = isset($_POST["a$i"]) ? intval($_POST["a$i"]) : 0;
+    // Function to get therapy icon
+    function getTherapyIcon($therapy) {
+        $icons = [
+            "ABA" => "fas fa-chart-line",
+            "OT" => "fas fa-hands-helping",
+            "Play" => "fas fa-gamepad",
+            "Speech" => "fas fa-comments",
+            "Music" => "fas fa-music",
+            "Art" => "fas fa-palette",
+            "Social Skills" => "fas fa-users",
+            "Physical" => "fas fa-running"
+        ];
+        return isset($icons[$therapy]) ? $icons[$therapy] : "fas fa-heartbeat";
     }
-    
-    // Validate we have exactly 10 answers
-    if (count($answers) != 10) {
-        die("Error: Expected 10 answers, got " . count($answers));
-    }
-    
-    // Get user ID if logged in
-    $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-    
-    // Call prediction API
-    $result = predictAutism($answers, $childName, $childAge, $userId);
-    
-    // Store in session for results page
-    $_SESSION['test_result'] = $result;
-    $_SESSION['child_name'] = $childName;
-    $_SESSION['child_age'] = $childAge;
-    $_SESSION['answers'] = $answers;
-    
-    // Add user_id to result for tracking
-    if ($userId) {
-        $_SESSION['test_result']['user_id'] = $userId;
-    }
-    
-    // Redirect to results page
-    header("Location: details.php");
-    exit();
-}
-?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autism Screening Test - CareGuides</title>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    
-    <!-- Custom CSS -->
-    <style>
-        :root {
-            --primary-color: #4a6fa5;
-            --secondary-color: #166088;
-            --accent-color: #17a2b8;
-        }
-        
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        .test-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        .test-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 30px;
-            border-radius: 15px 15px 0 0;
-            margin-bottom: 0;
-        }
-        
-        .test-body {
-            background: white;
-            padding: 40px;
-            border-radius: 0 0 15px 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        
-        .question-card {
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            padding: 25px;
-            background: white;
-            transition: all 0.3s;
-        }
-        
-        .question-card:hover {
-            border-color: var(--primary-color);
-            box-shadow: 0 5px 15px rgba(74, 111, 165, 0.1);
-        }
-        
-        .question-number {
-            background: var(--primary-color);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-right: 15px;
-            font-size: 1.2rem;
-        }
-        
-        .answer-options {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        
-        .answer-option {
-            flex: 1;
-            text-align: center;
-        }
-        
-        .answer-option input {
-            display: none;
-        }
-        
-        .answer-option label {
-            display: block;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 500;
-        }
-        
-        .answer-option label:hover {
-            background-color: #f8f9fa;
-            border-color: var(--accent-color);
-        }
-        
-        .answer-option input:checked + label {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-        
-        .answer-yes label {
-            border-color: #28a745;
-            color: #28a745;
-        }
-        
-        .answer-yes input:checked + label {
-            background-color: #28a745;
-            border-color: #28a745;
-            color: white;
-        }
-        
-        .answer-no label {
-            border-color: #dc3545;
-            color: #dc3545;
-        }
-        
-        .answer-no input:checked + label {
-            background-color: #dc3545;
-            border-color: #dc3545;
-            color: white;
-        }
-        
-        .progress-container {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        
-        .progress {
-            height: 8px;
-            margin: 10px 0;
-        }
-        
-        .progress-bar {
-            transition: width 0.3s ease;
-        }
-        
-        .child-info-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 30px;
-            border-left: 4px solid var(--accent-color);
-        }
-        
-        @media (max-width: 768px) {
-            .test-body {
+    echo "<!DOCTYPE html>
+    <html>
+    <head>
+        <title>Prediction Result | Therapy System</title>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'>
+        <style>
+            /* Your existing CSS styles */
+            :root {
+                --primary: #2563eb;
+                --primary-dark: #1d4ed8;
+                --secondary: #10b981;
+                --light-bg: #f0f9ff;
+                --card-bg: #ffffff;
+                --text-primary: #1f2937;
+                --text-secondary: #6b7280;
+                --border: #cbd5e1;
+                --success: #10b981;
+                --warning: #f59e0b;
+                --danger: #ef4444;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+                min-height: 100vh;
                 padding: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .result-container {
+                width: 100%;
+                max-width: 900px;
+            }
+
+            .header {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+
+            .header h1 {
+                color: var(--primary);
+                font-size: 2.5rem;
+                margin-bottom: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .header p {
+                color: var(--text-secondary);
+                font-size: 1.1rem;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .main-card {
+                background: var(--card-bg);
+                padding: 40px;
+                border-radius: 20px;
+                box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+                position: relative;
+                overflow: hidden;
+            }
+
+            .main-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 5px;
+                background: linear-gradient(90deg, var(--primary), var(--secondary));
+            }
+
+            .result-header {
+                text-align: center;
+                margin-bottom: 30px;
+                padding-bottom: 20px;
+                border-bottom: 2px solid var(--light-bg);
+            }
+
+            .result-header h2 {
+                color: var(--text-primary);
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+
+            .subtitle {
+                color: var(--text-secondary);
+                font-size: 1rem;
+            }
+
+            .content-wrapper {
+                display: grid;
+                gap: 30px;
+            }
+
+            .info-section {
+                background: var(--light-bg);
+                padding: 25px;
+                border-radius: 15px;
+                border-left: 5px solid var(--primary);
+            }
+
+            .info-section h3 {
+                color: var(--primary);
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 1.4rem;
+            }
+
+            .info-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+
+            .info-item {
+                background: white;
+                padding: 15px;
+                border-radius: 10px;
+                border: 1px solid var(--border);
+            }
+
+            .info-label {
+                font-weight: 600;
+                color: var(--text-secondary);
+                font-size: 0.9rem;
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .info-value {
+                font-size: 1.1rem;
+                color: var(--text-primary);
+                font-weight: 500;
+            }
+
+            .status-badge {
+                display: inline-block;
+                padding: 4px 12px;
+                border-radius: 20px;
+                font-size: 0.8rem;
+                font-weight: 600;
+                margin-left: 10px;
+            }
+
+            .status-positive {
+                background: rgba(16, 185, 129, 0.1);
+                color: var(--success);
+                border: 1px solid var(--success);
+            }
+
+            .status-neutral {
+                background: rgba(245, 158, 11, 0.1);
+                color: var(--warning);
+                border: 1px solid var(--warning);
+            }
+
+            .status-negative {
+                background: rgba(239, 68, 68, 0.1);
+                color: var(--danger);
+                border: 1px solid var(--danger);
+            }
+
+            .prediction-result {
+                background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+                padding: 30px;
+                border-radius: 15px;
+                color: white;
+                text-align: center;
+                animation: pulse 2s infinite;
+            }
+
+            @keyframes pulse {
+                0% { box-shadow: 0 5px 20px rgba(37, 99, 235, 0.3); }
+                50% { box-shadow: 0 5px 30px rgba(37, 99, 235, 0.6); }
+                100% { box-shadow: 0 5px 20px rgba(37, 99, 235, 0.3); }
+            }
+
+            .prediction-label {
+                font-size: 1rem;
+                margin-bottom: 10px;
+                opacity: 0.9;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .therapy-name {
+                font-size: 2.5rem;
+                font-weight: bold;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .therapy-description {
+                font-size: 1.1rem;
+                opacity: 0.9;
+                max-width: 600px;
+                margin: 0 auto;
+                line-height: 1.6;
+            }
+
+            .error-message {
+                background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+                padding: 25px;
+                border-radius: 15px;
+                border-left: 5px solid var(--danger);
+                color: var(--danger);
+            }
+
+            .error-message h3 {
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .button-group {
+                display: flex;
+                gap: 15px;
+                margin-top: 30px;
+                flex-wrap: wrap;
+            }
+
+            .btn {
+                flex: 1;
+                min-width: 200px;
+                padding: 16px;
+                border: none;
+                border-radius: 12px;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                text-decoration: none;
+                text-align: center;
+            }
+
+            .btn-primary {
+                background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+                color: white;
+                box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+            }
+
+            .btn-primary:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+            }
+
+            .btn-secondary {
+                background: #f1f5f9;
+                color: var(--text-primary);
+                border: 2px solid var(--border);
+            }
+
+            .btn-secondary:hover {
+                background: #e2e8f0;
+                transform: translateY(-3px);
+            }
+
+            .btn-success {
+                background: linear-gradient(135deg, var(--success) 0%, #0da271 100%);
+                color: white;
+                box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+            }
+
+            .btn-success:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
             }
             
-            .answer-options {
-                flex-direction: column;
+            .database-notice {
+                background: #f0f9ff;
+                border: 1px solid #bae6fd;
+                border-radius: 8px;
+                padding: 10px 15px;
+                margin-top: 15px;
+                font-size: 0.85rem;
+                color: #0369a1;
             }
             
-            .question-card {
-                padding: 20px;
+            .database-notice i {
+                margin-right: 8px;
             }
-        }
-    </style>
-</head>
-<body>
-    <!-- Navigation -->
-    <?php include 'includes/header.php'; ?>
-    
-    <div class="test-container">
-        <!-- Test Header -->
-        <div class="test-header text-center">
-            <h1 class="display-5 fw-bold mb-3">
-                <i class="bi bi-clipboard-check me-3"></i>Autism Screening Test
-            </h1>
-            <p class="lead mb-0">Complete this 10-question screening test for preliminary assessment</p>
-        </div>
-        
-        <!-- Test Body -->
-        <div class="test-body">
-            <!-- Progress Bar -->
-            <div class="progress-container">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="fw-bold">Test Progress</span>
-                    <span id="progressText">0/10 questions answered</span>
-                </div>
-                <div class="progress">
-                    <div class="progress-bar bg-primary" id="progressBar" style="width: 0%"></div>
-                </div>
-                <div class="text-center text-muted small mt-2">
-                    <i class="bi bi-info-circle me-1"></i> Answer all questions for accurate results
-                </div>
-            </div>
-            
-            <?php if (!isset($_SESSION['logged_in'])): ?>
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                You're not logged in. <a href="login.php" class="alert-link">Login</a> to save your test results and track progress.
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-            <?php endif; ?>
-            
-            <form method="POST" action="" id="testForm">
-                <!-- Child Information -->
-                <div class="child-info-card">
-                    <h4 class="mb-4">
-                        <i class="bi bi-person-circle me-2"></i> Child Information
-                    </h4>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Child's Name (Optional)</label>
-                            <input type="text" class="form-control" name="child_name" 
-                                   placeholder="Enter child's name">
-                            <small class="text-muted">For identification purposes only</small>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Child's Age (Optional)</label>
-                            <div class="input-group">
-                                <input type="number" class="form-control" name="child_age" 
-                                       min="1" max="18" placeholder="Age in years">
-                                <span class="input-group-text">years</span>
-                            </div>
-                            <small class="text-muted">Recommended: 18 months to 5 years</small>
-                        </div>
-                    </div>
-                </div>
+
+            @media (max-width: 768px) {
+                .main-card {
+                    padding: 25px;
+                }
                 
-                <!-- Questions -->
-                <?php
-                $questions = [
-                    1 => "Does the child look at you when you call his/her name?",
-                    2 => "Does the child point at objects to show interest?",
-                    3 => "Does the child pretend play (e.g., pretend to drink from an empty cup)?",
-                    4 => "Does the child use single words meaningfully?",
-                    5 => "Does the child respond to their name?",
-                    6 => "Does the child make eye contact when interacting?",
-                    7 => "Does the child show interest in other children?",
-                    8 => "Does the child bring objects to show parents?",
-                    9 => "Does the child follow simple instructions?",
-                    10 => "Does the child engage in back-and-forth social interaction?"
-                ];
+                .header h1 {
+                    font-size: 2rem;
+                }
                 
-                foreach ($questions as $num => $question):
-                ?>
-                <div class="question-card" id="question-<?php echo $num; ?>">
-                    <div class="d-flex align-items-start mb-3">
-                        <div class="question-number"><?php echo $num; ?></div>
-                        <div>
-                            <h5 class="mb-2"><?php echo $question; ?></h5>
-                            <small class="text-muted">Select the most appropriate response</small>
-                        </div>
-                    </div>
-                    
-                    <div class="answer-options">
-                        <div class="answer-option answer-yes">
-                            <input type="radio" name="a<?php echo $num; ?>" 
-                                   value="0" id="q<?php echo $num; ?>_yes" required 
-                                   data-question="<?php echo $num; ?>">
-                            <label for="q<?php echo $num; ?>_yes">
-                                <i class="bi bi-check-circle-fill me-2"></i> Yes
-                            </label>
-                        </div>
+                .therapy-name {
+                    font-size: 2rem;
+                }
+                
+                .button-group {
+                    flex-direction: column;
+                }
+                
+                .btn {
+                    min-width: 100%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class='result-container'>
+            <div class='header'>
+                <h1><i class='fas fa-chart-line'></i> Prediction Results</h1>
+                <p>Based on the information you provided, here are the therapy recommendations</p>
+            </div>
+
+            <div class='main-card'>
+                <div class='result-header'>
+                    <h2>Therapy Prediction Analysis</h2>
+                    <div class='subtitle'>Generated on " . date("F j, Y, g:i a") . "</div>
+                </div>
+
+                <div class='content-wrapper'>
+                    <div class='info-section'>
+                        <h3><i class='fas fa-user-circle'></i> Child's Profile</h3>
+                        <div class='info-grid'>";
+                            // Display child's name
+                            if (!empty($childName) && $childName !== 'Child from Therapy Form') {
+                                echo "<div class='info-item'>
+                                    <div class='info-label'><i class='fas fa-user'></i> Child's Name</div>
+                                    <div class='info-value'>" . htmlspecialchars($childName) . "</div>
+                                </div>";
+                            }
+                            
+                            echo "<div class='info-item'>
+                                <div class='info-label'><i class='fas fa-birthday-cake'></i> Age</div>
+                                <div class='info-value'>" . htmlspecialchars($data["Age"]) . " years</div>
+                            </div>";
+                            echo "<div class='info-item'>
+                                <div class='info-label'><i class='fas fa-brain'></i> ASD Level</div>
+                                <div class='info-value'>" . readable("ASD_Level", $data["ASD_Level"]) . "</div>
+                            </div>";
+                            echo "<div class='info-item'>
+                                <div class='info-label'><i class='fas fa-comments'></i> Speech Delay</div>
+                                <div class='info-value'>" . readable("Speech_Delay", $data["Speech_Delay"]) . "</div>
+                            </div>";
+                            echo "<div class='info-item'>
+                                <div class='info-label'><i class='fas fa-walking'></i> Motor Delay</div>
+                                <div class='info-value'>" . readable("Motor_Delay", $data["Motor_Delay"]) . "</div>
+                            </div>";
+                            echo "<div class='info-item'>
+                                <div class='info-label'><i class='fas fa-star'></i> Feedback</div>
+                                <div class='info-value'>" . htmlspecialchars(ucfirst($data["Feedback"])) . " 
+                                    <span class='status-badge status-" . $data["Feedback"] . "'>" . ucfirst($data["Feedback"]) . "</span>
+                                </div>
+                            </div>";
+                            echo "<div class='info-item'>
+                                <div class='info-label'><i class='fas fa-history'></i> Past Therapies</div>
+                                <div class='info-value'>" . (!empty($data["Past_Therapies"]) ? implode(", ", $data["Past_Therapies"]) : "None tried") . "</div>
+                            </div>";
+                            echo "<div class='info-item'>
+                                <div class='info-label'><i class='fas fa-tasks'></i> Challenges</div>
+                                <div class='info-value'>" . (!empty($data["Challenges"]) ? implode(", ", $data["Challenges"]) : "None specified") . "</div>
+                            </div>";
+                        echo "</div>
+                    </div>";
+
+                    if (isset($result['prediction'])) {
+                        $therapyIcon = getTherapyIcon($result['prediction']);
+                        $therapyDescriptions = [
+                            "ABA" => "Focuses on improving specific behaviors and skills through positive reinforcement.",
+                            "OT" => "Helps develop skills for daily living, sensory processing, and fine motor coordination.",
+                            "Play" => "Uses play activities to improve social, emotional, and cognitive development.",
+                            "Speech" => "Targets communication skills, language development, and speech clarity.",
+                            "Music" => "Utilizes musical activities to enhance communication, social skills, and emotional expression.",
+                            "Art" => "Encourages self-expression and fine motor skills through creative activities.",
+                            "Social Skills" => "Focuses on improving interaction, communication, and relationship-building abilities.",
+                            "Physical" => "Develops gross motor skills, coordination, and physical fitness."
+                        ];
                         
-                        <div class="answer-option answer-no">
-                            <input type="radio" name="a<?php echo $num; ?>" 
-                                   value="1" id="q<?php echo $num; ?>_no" 
-                                   data-question="<?php echo $num; ?>">
-                            <label for="q<?php echo $num; ?>_no">
-                                <i class="bi bi-x-circle-fill me-2"></i> No
-                            </label>
+                        $description = isset($therapyDescriptions[$result['prediction']]) 
+                            ? $therapyDescriptions[$result['prediction']] 
+                            : "A tailored therapeutic approach based on individual needs and characteristics.";
+
+                        echo "<div class='prediction-result'>
+                            <div class='prediction-label'><i class='fas fa-lightbulb'></i> RECOMMENDED THERAPY</div>
+                            <div class='therapy-name'><i class='" . $therapyIcon . "'></i> " . htmlspecialchars($result['prediction']) . "</div>
+                            <div class='therapy-description'>" . $description . "</div>
                         </div>
+
+                        <div class='info-section'>
+                            <h3><i class='fas fa-clock'></i> Next Steps</h3>
+                            <p>Based on the prediction, we recommend starting with " . htmlspecialchars($result['prediction']) . " therapy. 
+                            This approach has shown effectiveness for similar profiles. Consider consulting with a certified therapist 
+                            to develop a personalized implementation plan.</p>
+                            
+                            <!-- Database Save Notice -->
+                            <div class='database-notice'>
+                                <i class='fas fa-database'></i>
+                                <strong>Therapy prediction saved to your dashboard.</strong> 
+                                You can view this recommendation anytime in your test history.
+                            </div>
+                        </div>";
+                    } else {
+                        echo "<div class='error-message'>
+                            <h3><i class='fas fa-exclamation-triangle'></i> Prediction Error</h3>
+                            <p>" . htmlspecialchars($result['error'] ?? 'Unable to generate prediction. Please try again.') . "</p>
+                        </div>";
+                    }
+
+                    echo "<div class='button-group'>
+                        <a href='details.php' class='btn btn-secondary'>
+                            <i class='fas fa-redo'></i> New Prediction
+                        </a>
+                        <a href='../dashboard.php' class='btn btn-primary'>
+                            <i class='fas fa-tachometer-alt'></i> User Dashboard
+                        </a>
+                        <a href='javascript:window.print()' class='btn btn-success'>
+                            <i class='fas fa-print'></i> Print Results
+                        </a>
                     </div>
                 </div>
-                <?php endforeach; ?>
-                
-                <!-- Test Instructions -->
-                <div class="alert alert-info mt-4">
-                    <h5><i class="bi bi-info-circle-fill me-2"></i> Important Instructions</h5>
-                    <ul class="mb-0">
-                        <li>Answer all questions based on your observations of the child</li>
-                        <li>Be honest and accurate for best results</li>
-                        <li>This is a screening tool, not a diagnostic test</li>
-                        <li>Results should be discussed with a healthcare professional</li>
-                    </ul>
-                </div>
-                
-                <!-- Submit Button -->
-                <div class="text-center mt-5">
-                    <button type="submit" class="btn btn-primary btn-lg px-5 py-3">
-                        <i class="bi bi-clipboard-check me-2"></i> Submit Test & View Results
-                    </button>
-                    <button type="reset" class="btn btn-outline-secondary btn-lg ms-3 px-5 py-3">
-                        <i class="bi bi-arrow-clockwise me-2"></i> Clear All Answers
-                    </button>
-                </div>
-                
-                <div class="text-center mt-3">
-                    <small class="text-muted">
-                        <i class="bi bi-shield-lock me-1"></i> Your responses are confidential and secure
-                    </small>
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
-    
-    <!-- Footer -->
-    <?php include 'includes/footer.php'; ?>
-    
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Custom JavaScript -->
-    <script>
-        // Update progress bar
-        function updateProgress() {
-            const answered = document.querySelectorAll('input[type="radio"]:checked').length;
-            const total = 10;
-            const percentage = (answered / total) * 100;
-            
-            // Update progress bar
-            const progressBar = document.getElementById('progressBar');
-            progressBar.style.width = percentage + '%';
-            progressBar.textContent = `${Math.round(percentage)}%`;
-            
-            // Update progress text
-            document.getElementById('progressText').textContent = 
-                `${answered}/${total} questions answered`;
-            
-            // Update question card borders
-            document.querySelectorAll('.question-card').forEach(card => {
-                const questionNum = card.id.split('-')[1];
-                const isAnswered = document.querySelector(`input[name="a${questionNum}"]:checked`);
-                if (isAnswered) {
-                    card.style.borderColor = '#28a745';
-                    card.style.borderWidth = '2px';
-                } else {
-                    card.style.borderColor = '#e0e0e0';
-                    card.style.borderWidth = '1px';
+
+        <script>
+            // Add animation to the therapy result
+            document.addEventListener('DOMContentLoaded', function() {
+                const therapyResult = document.querySelector('.prediction-result');
+                if (therapyResult) {
+                    therapyResult.style.opacity = '0';
+                    therapyResult.style.transform = 'scale(0.9)';
+                    
+                    setTimeout(() => {
+                        therapyResult.style.transition = 'all 0.6s ease-out';
+                        therapyResult.style.opacity = '1';
+                        therapyResult.style.transform = 'scale(1)';
+                    }, 300);
                 }
             });
-            
-            // If all questions answered, scroll to submit button
-            if (answered === total) {
-                document.querySelector('button[type="submit"]').scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-            }
-        }
-        
-        // Add event listeners to radio buttons
-        document.querySelectorAll('input[type="radio"]').forEach(radio => {
-            radio.addEventListener('change', updateProgress);
-        });
-        
-        // Form validation
-        document.getElementById('testForm').addEventListener('submit', function(e) {
-            const unanswered = [];
-            for (let i = 1; i <= 10; i++) {
-                if (!document.querySelector(`input[name="a${i}"]:checked`)) {
-                    unanswered.push(i);
-                }
-            }
-            
-            if (unanswered.length > 0) {
-                e.preventDefault();
-                
-                // Create alert
-                const alertDiv = document.createElement('div');
-                alertDiv.className = 'alert alert-danger alert-dismissible fade show';
-                alertDiv.innerHTML = `
-                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                    Please answer questions: ${unanswered.join(', ')}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                `;
-                
-                // Insert at top of form
-                const testBody = document.querySelector('.test-body');
-                testBody.insertBefore(alertDiv, testBody.firstChild);
-                
-                // Scroll to first unanswered question
-                document.getElementById(`question-${unanswered[0]}`).scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-                
-                return false;
-            }
-            
-            // Show loading state
-            const submitBtn = this.querySelector('button[type="submit"]');
-            submitBtn.innerHTML = '<i class="bi bi-hourglass-split me-2"></i> Processing...';
-            submitBtn.disabled = true;
-            
-            return true;
-        });
-        
-        // Reset form handler
-        document.querySelector('button[type="reset"]').addEventListener('click', function() {
-            if (confirm('Are you sure you want to clear all answers?')) {
-                setTimeout(updateProgress, 100);
-            } else {
-                return false;
-            }
-        });
-        
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            updateProgress();
-        });
-    </script>
-</body>
-</html>
+        </script>
+    </body>
+    </html>";
+}
+?>
